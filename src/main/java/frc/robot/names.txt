@@ -1,0 +1,32 @@
+ This is a dictionary(?) of the names of variables. You can look through this to find what a variable does, or what variable does what.
+
+ Vocabulary:
+  {} - In this document, they mean jokes are contained inside
+  Swerve Drive - A wheel that turns on the upward axis as well as the horizontal axis {powers}
+  Indexer - Handles piece managment while not in the intake or the note being shot
+  Note - The foam ring that is used in the Crescendo game
+  {Carpet - rub for good luck. colon closed-parentheses} 
+  Climber - An extendable arm that is used to hook onto a chain to raise the bot off the ground
+  Can Wires - Yellow and green wires that send information; data wires
+  Black and red wires - Power wires
+  Limelight - A camera system
+  April tags - QR code looking things that have unique IDs
+  Brain box - Facilitates communication with the RoboRio
+  RoboRio - Onboard Computer
+  VRM - Voltage Regulation Module
+
+ Variables:
+
+
+ Functions:
+
+
+ Commands:
+
+
+ Data Types:
+
+
+ Classes:
+  TeleopSwerve - Manual control of the swerve drive
+
