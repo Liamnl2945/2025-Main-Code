@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import frc.robot.SwerveModule;
 import frc.robot.constants;
-import frc.robot.commands.SetShooterSpeedByAprilTag;
 import frc.robot.commands.TeleopSwerve;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -14,13 +13,10 @@ import frc.robot.RobotContainer;
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.commands.FollowPathHolonomic;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.PathPlannerPath;
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.PathPlannerLogging;
-import com.pathplanner.lib.util.ReplanningConfig;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -36,7 +32,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 
 
 public class Swerve extends SubsystemBase {
-    public SwerveDriveOdometry swerveOdometry;
+    public SwerveDriveOdometry odometry;
 
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
@@ -59,24 +55,40 @@ public class Swerve extends SubsystemBase {
             new SwerveModule(2, constants.Swerve.Mod2.constants),
             new SwerveModule(3, constants.Swerve.Mod3.constants)
         };
-        swerveOdometry = new SwerveDriveOdometry(constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
+        odometry = new SwerveDriveOdometry(constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
 
 
-         AutoBuilder.configureHolonomic(
-            this::getPose,
-            this::resetPose,
-            this::getSpeeds,
-            this::driveRobotRelative,
-            constants.Swerve.pathFollowerConfig,
-             // Adjust config values as needed
-            () -> { // Boolean supplier that controls when the path will be mirrored for the red alliance
-              // This will flip the path being followed to the red side of the field.
-              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-              return false;
-             }, // Mirroring logic for red alliance
-            this
-            
-        );
+         try{
+      RobotConfig config = RobotConfig.fromGUISettings();
+
+      // Configure AutoBuilder
+      AutoBuilder.configure(
+        this::getPose, 
+        this::resetPose, 
+        this::getSpeeds, 
+        this::driveRobotRelative, 
+        new PPHolonomicDriveController(
+          constants.Swerve.translationConstants,
+          constants.Swerve.rotationConstants
+        ),
+        config,
+        () -> {
+            // Boolean supplier that controls when the path will be mirrored for the red alliance
+            // This will flip the path being followed to the red side of the field.
+            // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+            var alliance = DriverStation.getAlliance();
+            if (alliance.isPresent()) {
+                return alliance.get() == DriverStation.Alliance.Red;
+            }
+            return false;
+        },
+        this
+      );
+    }catch(Exception e){
+      DriverStation.reportError("Failed to load PathPlanner config and configure AutoBuilder", e.getStackTrace());
+    }
+
 
         // Set up custom logging to add the current path to a field 2d widget
        // PathPlannerLogging.setLogActivePathCallback((poses) -> field.getObject("path").setPoses(poses));
@@ -85,7 +97,7 @@ public class Swerve extends SubsystemBase {
     }
      @Override
     public void periodic(){
-        swerveOdometry.update(getGyroYaw(), getModulePositions());  
+        odometry.update(getGyroYaw(), getModulePositions());  
 
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCANcoder().getDegrees());
@@ -149,11 +161,11 @@ public double[] getSwerveVector(){
 }
 
 public Pose2d getPose() {
-    return swerveOdometry.getPoseMeters();
+    return odometry.getPoseMeters();
 }
 
 public void setPose(Pose2d pose) {
-    swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), pose);
+    odometry.resetPosition(getGyroYaw(), getModulePositions(), pose);
 }
 
 public Rotation2d getHeading(){//Returns the normal heading of the robot UNLESS we are autointake (noteAim), in which case the robots movements become relative to the note & its alignments with the camera. Left on the joystick will move the robot left, relative to the bots current position to the note. Keep in mind rotation (should be) dynamically shifting to face the note, so this new left will change in accordance to that.
@@ -164,15 +176,15 @@ public Rotation2d getHeading(){//Returns the normal heading of the robot UNLESS 
 }
 
 public void setHeading(Rotation2d heading){
-    swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), heading));
+    odometry.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), heading));
 }
 
 public void zeroHeading(){
-    swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), new Rotation2d()));
+    odometry.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), new Rotation2d()));
 }
 
 public Rotation2d getGyroYaw() {
-    return Rotation2d.fromDegrees((gyro.getYaw().getValue()) );
+    return Rotation2d.fromDegrees((gyro.getYaw().getValueAsDouble()) );
 }
 
 public void resetModulesToAbsolute(){
@@ -213,7 +225,7 @@ public void resetModulesToAbsolute(){
         }
     }
     public void resetPose(Pose2d pose) {
-        swerveOdometry.resetPosition((getGyroYaw()), getModulePositions(), pose);
+        odometry.resetPosition((getGyroYaw()), getModulePositions(), pose);
     }
 
     public ChassisSpeeds getRobotRelativeSpeeds(ChassisSpeeds fieldRelativeSpeeds) {

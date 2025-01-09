@@ -2,14 +2,11 @@ package frc.robot;
 
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.config.PIDConstants;
-    
-import com.pathplanner.lib.util.ReplanningConfig;
+import com.pathplanner.lib.config.PIDConstants;
+import edu.wpi.first.math.geometry.Translation2d;
 import com.ctre.phoenix6.signals.InvertedValue;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
@@ -179,13 +176,8 @@ public class constants {
         public void setDrivesMode(NeutralModeValue brake) {
         }
 
-        public static final HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(
-      new PIDConstants(5.0, 0.5, 0.0), // Translation constants 
-      new PIDConstants(5.0,0.0, 0.0), // Rotation constants 
-      4.5, 
-      0.43, // Drive base radius (distance from center to furthest module) 
-      new ReplanningConfig()
-    );
+        public static final PIDConstants translationConstants = new PIDConstants(5.0, 0.0, 0.0);
+        public static final PIDConstants rotationConstants = new PIDConstants(5.0, 0.0, 0.0);
       
     }
      

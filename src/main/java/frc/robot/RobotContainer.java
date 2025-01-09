@@ -1,65 +1,22 @@
 package frc.robot;
 
-import java.util.List;
-
-import com.ctre.phoenix.led.CANdle;
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.path.GoalEndState;
-import com.pathplanner.lib.path.PathConstraints;
-import com.pathplanner.lib.path.PathPlannerPath;
-
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.Intake_Indexer;
-import frc.robot.commands.Intake_IndexerReverse;
-import frc.robot.commands.RunIndexerCommand;
-import frc.robot.commands.RunShooter;
-import frc.robot.commands.SetShooterSpeedAuto;
-import frc.robot.commands.SetShooterSpeedByAprilTag;
-import frc.robot.commands.ShooterReverse;
-import frc.robot.commands.ShooterSpeedup;
-import frc.robot.commands.StopShooterCommand;
-import frc.robot.commands.SwerveAim;
 import frc.robot.commands.TeleopSwerve;
-import frc.robot.commands.climberCom;
-import frc.robot.commands.intake_IndexerAuto;
-import frc.robot.commands.intake_indexerStop;
-import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LEDSubsystem;
-import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Swerve;
-import frc.robot.subsystems.indexer;
 
 public class RobotContainer {
     //LED subsystem
     private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
 
-    //intake
-    private final Intake I_Intake = new Intake();
-    //indexer
-    private final indexer I_Indexer = new indexer();
-    //shooter
-    private final Shooter S_Shooter = new Shooter();
-    //climber
-    private final Climber C_Climber = new Climber();
     //Swerve
     private static final Swerve s_Swerve = new Swerve();
 
@@ -134,12 +91,7 @@ public class RobotContainer {
     public final JoystickButton slowShoot = new JoystickButton(manipulator, XboxController.Button.kX.value);
     public final JoystickButton ShootLimeLight = new JoystickButton(manipulator, XboxController.Button.kY.value);
 
-    //one button code
-    private final Intake_Indexer intake_Indexer = new Intake_Indexer(I_Intake, I_Indexer, manipulator);
-    private final climberCom climberCommand = new climberCom(C_Climber, manipulator);
-    private final SetShooterSpeedByAprilTag ShooterAprilTags = new SetShooterSpeedByAprilTag(S_Shooter);
-    private final RunIndexerCommand RunIndexerCommand = new RunIndexerCommand(I_Indexer);
-    private final RunShooter RunShooter = new RunShooter(S_Shooter);
+    
     //intake
     //public final JoystickButton intakeIn = new JoystickButton(manipulator, XboxController.Button.kLeftBumper.value);
     // public final JoystickButton intakeOut = new JoystickButton(manipulator, XboxController.Button.kRightBumper.value);
@@ -158,83 +110,7 @@ public class RobotContainer {
 
     public RobotContainer() {
         //CommandScheduler.getInstance().registerSubsystem(m_LedSubsystem);
-        lockGroup = new ParallelCommandGroup(
-                new SetShooterSpeedAuto(S_Shooter),
-                new SwerveAim(s_Swerve,
-                        () -> -driver.getRawAxis(translationAxis),
-                        () -> -driver.getRawAxis(strafeAxis),
-                        () -> -driver.getRawAxis(rotationAxis),
-                        () -> robotCentric.getAsBoolean()
-                ));
-        Command lockGroupgtimed = lockGroup.withTimeout(1);
-
-        indexerCmd = new SequentialCommandGroup(
-                new WaitCommand(0.25),
-                new intake_IndexerAuto(I_Intake, I_Indexer)
-        );
-        indexerStopCommand = new SequentialCommandGroup(
-                new intake_indexerStop(I_Intake, I_Indexer)
-        );
-        Command indexerinverted = new SequentialCommandGroup(
-                new Intake_IndexerReverse(I_Intake, I_Indexer)
-        );
-
-        Command shooterReverseCommand = new ShooterReverse(S_Shooter);
-        Command ShooterReverseTime = shooterReverseCommand.withTimeout(0.5);
-        Command indexerStopTimed = indexerStopCommand.withTimeout(.005);
-        Command indexerTimed = indexerCmd.withTimeout(1.5);
-        Command indexerReverse = indexerinverted.withTimeout(.25);
-        //Command indexerRunThing = indexerCmd.withTimeout(4);
-        Command StopShooterCommand = new StopShooterCommand(S_Shooter);
-        Command StopShooterTime = StopShooterCommand.withTimeout(.025);
-        //Command StopShooterInstant = new InstantCommand(new StopShooterCommand(S_Shooter));
-        Command ShooterRev = new ShooterSpeedup(S_Shooter);
-        Command TimedRev = ShooterRev.withTimeout(1.5);
-        Command RunShooter = new RunShooter(S_Shooter);
-        Command RunShooterTime = RunShooter.withTimeout(.5);
-
-
-        NamedCommands.registerCommand("Lock Sequence", lockGroupgtimed); // Set a desired name
-        NamedCommands.registerCommand("IndexerRun", indexerTimed);
-        NamedCommands.registerCommand("indexer Stop", indexerStopTimed);
-        NamedCommands.registerCommand("indexer Reverse", indexerReverse);
-        NamedCommands.registerCommand("Indexer4Reverse", indexerTimed);
-        NamedCommands.registerCommand("ShooterReverse", ShooterReverseTime);
-        NamedCommands.registerCommand("ShooterRev", TimedRev);
-        NamedCommands.registerCommand("RunShooter", RunShooterTime);
-
-
-        // Build an auto chooser. This will use Commands.none() as the default option.
-        // autoChooser = AutoBuilder.buildAutoChooser();
-
-
-        NamedCommands.registerCommand("Lock Print", Commands.print("RUNNING LOCK SEQUENCE"));
-        NamedCommands.registerCommand("Lock FINISHED Print", Commands.print("LOCK SEQUENCE FINISHED"));
-        NamedCommands.registerCommand("Intaked Print", Commands.print("INTAKE RAN"));
-        NamedCommands.registerCommand("Stop Shooter", StopShooterTime);
-        NamedCommands.registerCommand("SHOOTER RUN", RunShooter);
-        NamedCommands.registerCommand("Intake & Indexer", intake_Indexer);
-        NamedCommands.registerCommand("indexer ONLY", RunIndexerCommand);
-        NamedCommands.registerCommand("Shooter Lock", ShooterAprilTags);
-
-
-        configureBindings();
-
-        autoChooser = AutoBuilder.buildAutoChooser(); // Default auto will be `Commands.none()`
-        SmartDashboard.putData("Auto Mode", autoChooser);
-
-        // Another option that allows you to specify the default auto by its name
-        // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
-
-
-        //JoystickButton shooterButton = new JoystickButton(manipulator, XboxController.Button.kA.value);
-        //shooterButton.whileTrue(new SetShooterSpeedByAprilTag(S_Shooter));
-        //shooterButton.whileFalse(new InstantCommand(()-> S_Shooter.stopShooter()));
-
-
-        // Register Named Commands
-        //NamedCommands.registerCommand("autoBalance", s_Swerve.ExamplePath());
-
+        
 
         s_Swerve.setDefaultCommand(
 
@@ -290,27 +166,7 @@ public class RobotContainer {
         /* Manipulator Butoons */
 
 
-        /* intake */
-        //intakeIn.onTrue(new InstantCommand(() -> I_Intake.runIntake()));
-        //intakeOut.onTrue(new InstantCommand(() -> I_Intake.reverseIntake()));
-        //intakeIn.onFalse(new InstantCommand(() -> I_Intake.stopIntake()));
-        //intakeOut.onFalse(new InstantCommand(() -> I_Intake.stopIntake()));
-        //intakeSlow.onTrue(new InstantCommand(() ->I_Intake.slowReverseIntake()));
-        //intakeSlow.onFalse(new InstantCommand(() -> I_Intake.stopIntake()));
-
-        /* indexer */
-        //indexerIn.onTrue(new InstantCommand(() -> I_Indexer.runIndexer()));
-        //indexerIn.onFalse(new InstantCommand(()-> I_Indexer.stopIndexer()));
-        //indexerOut.onTrue(new InstantCommand(() -> I_Indexer.reverseIndexer()));
-        //indexerOut.onFalse(new InstantCommand(()-> I_Indexer.stopIndexer()));
-
-        /* shooter */
-        //shooterRun.onTrue(new InstantCommand(() -> S_Shooter.runShooter()));
-        //shooterRun.onFalse(new InstantCommand(()-> S_Shooter.stopShooter()));
-        shooterReverse.onTrue(new InstantCommand(() -> S_Shooter.reverseShooter()));
-        shooterReverse.onFalse(new InstantCommand(() -> S_Shooter.stopShooter()));
-        slowShoot.onTrue(new InstantCommand(() -> S_Shooter.slowShoot()));
-        slowShoot.onFalse(new InstantCommand(() -> S_Shooter.stopShooter()));
+       
 
 
         //new JoystickButton(driver, XboxController.Button.kY.value)
@@ -320,10 +176,7 @@ public class RobotContainer {
     }
 
     public void configureDefaultCommands() {
-        I_Indexer.setDefaultCommand(intake_Indexer);
-        I_Intake.setDefaultCommand(intake_Indexer);
-        C_Climber.setDefaultCommand(climberCommand);
-        S_Shooter.setDefaultCommand(ShooterAprilTags);
+       
     }
 
     public Command getAutonomousCommand() {
