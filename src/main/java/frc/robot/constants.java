@@ -4,6 +4,8 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.config.PIDConstants;
+    
 import com.pathplanner.lib.util.ReplanningConfig;
 import com.ctre.phoenix6.signals.InvertedValue;
 import edu.wpi.first.math.geometry.Rotation2d;
