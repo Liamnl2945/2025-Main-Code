@@ -11,7 +11,6 @@ public class Elevator extends SubsystemBase {
     private final static TalonFX elevatorMotor = new TalonFX(constants.Elevator.elevator);
         
         public Elevator(){
-            elevatorMotor.setInverted(true);
             elevatorMotor.setNeutralMode(NeutralModeValue.Brake);
         }
     
@@ -22,7 +21,7 @@ public class Elevator extends SubsystemBase {
             elevatorMotor.set(0); 
         }
         else{
-            elevatorMotor.set(speed);
+            elevatorMotor.set(-speed);
         } 
     }
 }
