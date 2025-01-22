@@ -112,14 +112,14 @@ public class TeleopSwerve extends Command {
                 if(!isRotationLocked){//this is to prevent it from creating a new PID controller everytime, and will use the same PID & LL data
                     isRotationLocked = true;
                     isPointLocked = false;
-                    setpoint = (gyro.getYaw().getValue() + limelightData.TagYaw) % 360;
+                    setpoint = (gyro.getYaw().getValueAsDouble() + limelightData.TagYaw) % 360;
                     rotationPIDAprilTagRotationLock = new AprilTagRotationLock();
-                    rotationVal = rotationPIDAprilTagRotationLock.getRd(calculateError(setpoint, gyro.getYaw().getValue()));
+                    rotationVal = rotationPIDAprilTagRotationLock.getRd(calculateError(setpoint, gyro.getYaw().getValueAsDouble()));
                     translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), constants.stickDeadband);
                     strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), constants.stickDeadband);
                 }
                 else{
-                    rotationVal = rotationPIDAprilTagRotationLock.getRd(calculateError(setpoint, gyro.getYaw().getValue()));
+                    rotationVal = rotationPIDAprilTagRotationLock.getRd(calculateError(setpoint, gyro.getYaw().getValueAsDouble()));
                     translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), constants.stickDeadband);
                     strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), constants.stickDeadband);
                 }

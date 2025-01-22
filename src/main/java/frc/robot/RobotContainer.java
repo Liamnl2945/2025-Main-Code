@@ -9,9 +9,12 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.robot.commands.ElevatorCom;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.Swerve;
+import frc.robot.subsystems.Elevator;
 
 public class RobotContainer {
     //LED subsystem
@@ -20,6 +23,9 @@ public class RobotContainer {
     //Swerve
     private static final Swerve s_Swerve = new Swerve();
 
+    //Elevator 
+    private final Elevator e_Elevator = new Elevator();
+
     public static double[] getRobotVector() {
         return s_Swerve.getSwerveVector();
     }
@@ -27,9 +33,7 @@ public class RobotContainer {
 
     //AUTOS
     private SendableChooser<Command> autoChooser;
-    private final ParallelCommandGroup lockGroup;
-    private final SequentialCommandGroup indexerCmd;
-    private final SequentialCommandGroup indexerStopCommand;
+   
 
 
     //ShuffleboardTab limelightTab;
@@ -90,8 +94,10 @@ public class RobotContainer {
     public final JoystickButton shooterReverse = new JoystickButton(manipulator, XboxController.Button.kB.value);
     public final JoystickButton slowShoot = new JoystickButton(manipulator, XboxController.Button.kX.value);
     public final JoystickButton ShootLimeLight = new JoystickButton(manipulator, XboxController.Button.kY.value);
+    public final JoystickButton elevatorButton = new JoystickButton(manipulator, translationAxis);
 
-    
+    //Elevator
+    private final ElevatorCom elevatorCom = new ElevatorCom(e_Elevator, manipulator);    
     //intake
     //public final JoystickButton intakeIn = new JoystickButton(manipulator, XboxController.Button.kLeftBumper.value);
     // public final JoystickButton intakeOut = new JoystickButton(manipulator, XboxController.Button.kRightBumper.value);
@@ -176,6 +182,7 @@ public class RobotContainer {
     }
 
     public void configureDefaultCommands() {
+        e_Elevator.setDefaultCommand(elevatorCom);
        
     }
 

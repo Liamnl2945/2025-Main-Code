@@ -28,6 +28,9 @@ public class constants {
         public static final int limitSwitchLeftPort = 1;
 
     }
+    public final class Elevator{
+        public static final int elevator = 1;
+    }
 
     public final class Shooter {
         public static final int ShooterLeft = 12;
