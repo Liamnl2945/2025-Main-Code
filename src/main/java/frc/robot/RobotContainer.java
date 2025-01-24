@@ -89,11 +89,12 @@ public class RobotContainer {
 
 
     //manip
-    public final static JoystickButton aim = new JoystickButton(manipulator, XboxController.Button.kRightBumper.value);
-    public final static JoystickButton autoIntake = new JoystickButton(manipulator, XboxController.Button.kLeftBumper.value);
-    public final JoystickButton shooterReverse = new JoystickButton(manipulator, XboxController.Button.kB.value);
-    public final JoystickButton slowShoot = new JoystickButton(manipulator, XboxController.Button.kX.value);
-    public final JoystickButton ShootLimeLight = new JoystickButton(manipulator, XboxController.Button.kY.value);
+    public final static JoystickButton heightToggle = new JoystickButton(manipulator, XboxController.Button.kLeftBumper.value);
+    public final static JoystickButton L0 = new JoystickButton(manipulator, XboxController.Button.kRightBumper.value);
+    public final static JoystickButton L1 = new JoystickButton(manipulator, XboxController.Button.kA.value);
+    public final static JoystickButton L2 = new JoystickButton(manipulator, XboxController.Button.kX.value);
+    public final static JoystickButton L3 = new JoystickButton(manipulator, XboxController.Button.kB.value);
+    public final static JoystickButton L4 = new JoystickButton(manipulator, XboxController.Button.kY.value);
     public final JoystickButton elevatorButton = new JoystickButton(manipulator, translationAxis);
 
     //Elevator
@@ -126,7 +127,7 @@ public class RobotContainer {
                         () -> -driver.getRawAxis(strafeAxis),
                         () -> -driver.getRawAxis(rotationAxis),
                         () -> robotCentric.getAsBoolean(),
-                        () -> aim.getAsBoolean()
+                        () -> false
                 )
         );
 

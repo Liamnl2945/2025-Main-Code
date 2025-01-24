@@ -16,7 +16,7 @@ public class LEDSubsystem extends SubsystemBase{//NOTE the CANdle has 8 built in
     // Create a rainbow animation
     private static final Animation rainbowAnimation = new RainbowAnimation(1, 1, 60);
     private static final Animation larsonAnimation = new LarsonAnimation(255, 255, 255, 3, 1, /*TODO SET*/3, BounceMode.Front, 3, 1);
-
+    private static final Elevator elevator = new Elevator();
 
     
     public LEDSubsystem() {
@@ -43,5 +43,6 @@ public class LEDSubsystem extends SubsystemBase{//NOTE the CANdle has 8 built in
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
+        elevator.periodic();
     }
 }

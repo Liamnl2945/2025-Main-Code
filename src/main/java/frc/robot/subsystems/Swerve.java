@@ -46,7 +46,7 @@ public class Swerve extends SubsystemBase {
         gyro.getConfigurator().apply(new Pigeon2Configuration());
         //gyro.setYaw(0);
 
-        
+
 
 
         mSwerveMods = new SwerveModule[] {
@@ -123,6 +123,7 @@ public class Swerve extends SubsystemBase {
                     translation.getY(),
                         rotation)
                 );
+
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, constants.Swerve.maxSpeed);
 
     for (SwerveModule mod : mSwerveMods) {
@@ -169,9 +170,7 @@ public void setPose(Pose2d pose) {
 }
 
 public Rotation2d getHeading(){//Returns the normal heading of the robot UNLESS we are autointake (noteAim), in which case the robots movements become relative to the note & its alignments with the camera. Left on the joystick will move the robot left, relative to the bots current position to the note. Keep in mind rotation (should be) dynamically shifting to face the note, so this new left will change in accordance to that.
-     if(RobotContainer.autoIntake.getAsBoolean()){
-             return new Rotation2d(3.14159265358) ;
-     }
+
     return getPose().getRotation();
 }
 

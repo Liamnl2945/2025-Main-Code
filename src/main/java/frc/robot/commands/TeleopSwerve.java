@@ -89,7 +89,7 @@ public class TeleopSwerve extends Command {
 
     @Override
     public void execute() {
-        if (limelightData.TagValid && RobotContainer.aim.getAsBoolean() || ((limelightData.noteValid)&&(RobotContainer.autoIntake.getAsBoolean()))){//if limelight sees tag and the aiming is pressed
+        if (limelightData.TagValid){//if limelight sees tag and the aiming is pressed
             if (limelightData.tagID == 7 || limelightData.tagID == 4 ||  limelightData.tagID == 5 || limelightData.noteValid) {//Speaker logic & note lineup
                 //System.out.println("\n SHOOTER LOCKED To Speaker");
                 if(!isPointLocked){//this is to prevent it from creating a new PID everytime, and will use the same PID

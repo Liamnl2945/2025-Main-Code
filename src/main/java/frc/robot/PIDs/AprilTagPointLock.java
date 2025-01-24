@@ -17,7 +17,7 @@ public class AprilTagPointLock {
     }
 
     public double getR() {
-        if (RobotContainer.aim.getAsBoolean()) {//Variable aim is for tag lineup & spinner windup, autointake is for tag. If both are pressed simultaneously, 'aim' takes priority. Since this PID is only called if teleop swerve is successfully overwritten, we only need to check for one variable.
+        if (false) {//Variable aim is for tag lineup & spinner windup, autointake is for tag. If both are pressed simultaneously, 'aim' takes priority. Since this PID is only called if teleop swerve is successfully overwritten, we only need to check for one variable.
             double calculatedValue = rotationPID.calculate(limelightData.TagXOffset);
             return -calculatedValue;//Sign needs to change based off swerve orientation
         } else {

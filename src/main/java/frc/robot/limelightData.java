@@ -41,7 +41,7 @@ public class limelightData {
 
         TagXOffset = TagTable.getEntry("tx").getDouble(0.0);//Gets basic offset of the detected tag from network tables. This is the main source for calculating error values for pointlock PID's for the april tag aim lock
         NoteXOffset = TFTable.getEntry("tx").getDouble(0.0);
-        System.out.println(noteValid + " " + TagXOffset);
+       // System.out.println(noteValid + " " + TagXOffset);
 
         TagYOffset = TagTable.getEntry("ty").getDouble(0.0);
         TagArea = TagTable.getEntry("ta").getDouble(0.0);
