@@ -11,8 +11,11 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.ElevatorCom;
+import frc.robot.commands.LEDCom;
+
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.LEDSubsystem;
+import frc.robot.subsystems.LIGHT;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.Elevator;
 
@@ -25,6 +28,7 @@ public class RobotContainer {
 
     //Elevator 
     private final Elevator e_Elevator = new Elevator();
+    private final LIGHT L_leds = new LIGHT();
 
     public static double[] getRobotVector() {
         return s_Swerve.getSwerveVector();
@@ -98,7 +102,14 @@ public class RobotContainer {
     public final JoystickButton elevatorButton = new JoystickButton(manipulator, translationAxis);
 
     //Elevator
-    private final ElevatorCom elevatorCom = new ElevatorCom(e_Elevator, manipulator);    
+    private final ElevatorCom elevatorCom = new ElevatorCom(e_Elevator, manipulator);   
+    
+    //LEDS
+    private final LEDCom LEDCom = new LEDCom(L_leds);
+
+
+
+
     //intake
     //public final JoystickButton intakeIn = new JoystickButton(manipulator, XboxController.Button.kLeftBumper.value);
     // public final JoystickButton intakeOut = new JoystickButton(manipulator, XboxController.Button.kRightBumper.value);
@@ -184,6 +195,7 @@ public class RobotContainer {
 
     public void configureDefaultCommands() {
         e_Elevator.setDefaultCommand(elevatorCom);
+        L_leds.setDefaultCommand(LEDCom);
        
     }
 

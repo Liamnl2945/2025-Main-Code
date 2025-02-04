@@ -27,18 +27,19 @@ public class Elevator extends SubsystemBase {
         }
 
         public static void runElevator(double speed){
+            System.out.println("Elevator position: " + elevatorMotor.getPosition().getValueAsDouble());
             if(RobotContainer.heightToggle.getAsBoolean()) {
                 if(RobotContainer.L1.getAsBoolean()){//FOR ALL VALUES OF SELECTED, they are target rotations for the PID. For example, if L1 sets selected to 10, then it will raise the arm 10 motor rotations high.
-                    selected = 10;
+                    selected = 5.32;
                 }
                 if (RobotContainer.L2.getAsBoolean()){
-                    selected = 20;
+                    selected = 14.6;
                 }
                 if (RobotContainer.L3.getAsBoolean()){
-                    selected = 25;
+                    selected = 22.25;
                 }
                 if (RobotContainer.L4.getAsBoolean()){
-                    selected = 32;//HIGHEST POSSIBLE
+                    selected = 31.5;//HIGHEST POSSIBLE
                 }
                 if(RobotContainer.L0.getAsBoolean()){
                     selected = 0;
@@ -51,7 +52,7 @@ public class Elevator extends SubsystemBase {
                 elevatorMotor.setPosition(0);
             }
             if(selected != -1) {
-                elevatorMotor.set(pid.getSpeed(selected - elevatorMotor.getPosition().getValueAsDouble()));
+                elevatorMotor.set(pid.getSpeed(selected - elevatorMotor.getPosition().getValueAsDouble()));//pass in the error as a function of the distance between our current rotations and the setpoint rotation
             }
             else{
                 if(Math.abs(speed) < 0.1){
@@ -61,6 +62,6 @@ public class Elevator extends SubsystemBase {
                     elevatorMotor.set(-speed);
                 }
             }
-            System.out.println(elevatorMotor.getPosition().getValueAsDouble());
+
     }
 }
