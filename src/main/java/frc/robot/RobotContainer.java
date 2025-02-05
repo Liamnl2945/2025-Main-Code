@@ -12,12 +12,10 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.ElevatorCom;
 import frc.robot.commands.LEDCom;
+import frc.robot.commands.I2CCom;
 
 import frc.robot.commands.TeleopSwerve;
-import frc.robot.subsystems.LEDSubsystem;
-import frc.robot.subsystems.LIGHT;
-import frc.robot.subsystems.Swerve;
-import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.*;
 
 public class RobotContainer {
     //LED subsystem
@@ -29,6 +27,7 @@ public class RobotContainer {
     //Elevator 
     private final Elevator e_Elevator = new Elevator();
     private final LIGHT L_leds = new LIGHT();
+    private final I2CBruh I_I2C = new I2CBruh();
 
     public static double[] getRobotVector() {
         return s_Swerve.getSwerveVector();
@@ -106,6 +105,9 @@ public class RobotContainer {
     
     //LEDS
     private final LEDCom LEDCom = new LEDCom(L_leds);
+
+    //I2C
+    private final I2CCom I2CCom = new I2CCom(I_I2C);
 
 
 
@@ -196,6 +198,7 @@ public class RobotContainer {
     public void configureDefaultCommands() {
         e_Elevator.setDefaultCommand(elevatorCom);
         L_leds.setDefaultCommand(LEDCom);
+        I_I2C.setDefaultCommand(I2CCom);
        
     }
 
