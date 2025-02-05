@@ -16,6 +16,7 @@ import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.util.PixelFormat;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardComponent;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -43,7 +44,7 @@ public class Robot extends TimedRobot {
 
   public static CTREConfigs ctreConfigs;
 
-
+  public ShuffleboardTab lightsSensorTab;
 
   public ShuffleboardTab limelightTab;
 
@@ -78,6 +79,8 @@ public class Robot extends TimedRobot {
     //SmartDashboard.putData("Auto choices", m_chooser);
   
     //rumbleTimer.start();
+
+
 
   }
   public void rumbleTask() {
