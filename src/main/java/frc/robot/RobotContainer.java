@@ -7,10 +7,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.POVButton;
-import frc.robot.commands.ElevatorCom;
-import frc.robot.commands.LEDCom;
-import frc.robot.commands.I2CCom;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.*;
 
 import frc.robot.subsystems.*;
 
@@ -106,7 +104,7 @@ public class RobotContainer {
     //Elevator
     private final ElevatorCom elevatorCom = new ElevatorCom(e_Elevator, manipulator);   
     
-    //LEDS
+    //LEDs
     private final LEDCom LEDCom = new LEDCom(L_leds);
 
     //I2C
@@ -114,7 +112,6 @@ public class RobotContainer {
 
     //AlgaeIntake
     private final AlgaeIntakeCom algaeIntakeCom = new AlgaeIntakeCom(A_AlgaeIntake, manipulator);
-
 
 
 
