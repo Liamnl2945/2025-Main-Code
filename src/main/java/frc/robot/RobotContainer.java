@@ -3,20 +3,15 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.ElevatorCom;
 import frc.robot.commands.LEDCom;
 import frc.robot.commands.I2CCom;
 
-import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
@@ -30,6 +25,7 @@ public class RobotContainer {
     private final Elevator e_Elevator = new Elevator();
     private final LIGHT L_leds = new LIGHT();
     private final I2CBruh I_I2C = new I2CBruh();
+    private final AlgaeIntake A_AlgaeIntake = new AlgaeIntake();
 
     public static double[] getRobotVector() {
         return s_Swerve.getSwerveVector();
@@ -101,6 +97,11 @@ public class RobotContainer {
     public final static JoystickButton L3 = new JoystickButton(manipulator, XboxController.Button.kB.value);
     public final static JoystickButton L4 = new JoystickButton(manipulator, XboxController.Button.kY.value);
     public final JoystickButton elevatorButton = new JoystickButton(manipulator, translationAxis);
+    public final static int dpad = manipulator.getPOV();
+    public final static double leftTriggerAxis = manipulator.getRawAxis(XboxController.Axis.kLeftTrigger.value);
+    public final static double rightTriggerAxis = manipulator.getRawAxis(XboxController.Axis.kRightTrigger.value);
+
+
 
     //Elevator
     private final ElevatorCom elevatorCom = new ElevatorCom(e_Elevator, manipulator);   
@@ -110,6 +111,9 @@ public class RobotContainer {
 
     //I2C
     private final I2CCom I2CCom = new I2CCom(I_I2C);
+
+    //AlgaeIntake
+    private final AlgaeIntakeCom algaeIntakeCom = new AlgaeIntakeCom(A_AlgaeIntake, manipulator);
 
 
 
@@ -202,6 +206,7 @@ public class RobotContainer {
         e_Elevator.setDefaultCommand(elevatorCom);
         L_leds.setDefaultCommand(LEDCom);
         I_I2C.setDefaultCommand(I2CCom);
+        //A_AlgaeIntake.setDefaultCommand(algaeIntakeCom);
        
     }
 

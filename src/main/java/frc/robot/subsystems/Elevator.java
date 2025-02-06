@@ -1,7 +1,18 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.SparkMax;
+import com.revrobotics.SparkMaxLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
+
+
+
+
+
+
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.PIDs.TestingElevatorPID;
 import frc.robot.RobotContainer;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix6.hardware.ParentDevice;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -19,9 +30,11 @@ public class Elevator extends SubsystemBase {
     static double error;
     private static TestingElevatorPID pid = new TestingElevatorPID();
 
-    private final static TalonFX elevatorMotor = new TalonFX(constants.Elevator.elevator);
+   // private final static TalonFX elevatorMotor = new TalonFX(constants.Elevator.elevator);
+    private final static Spark elevatorMotor = new Spark(constants.Elevator.elevator);
 
         public Elevator(){
+            elevatorMotor.get
             elevatorMotor.setNeutralMode(NeutralModeValue.Brake);
             elevatorMotor.setPosition(0);
         }

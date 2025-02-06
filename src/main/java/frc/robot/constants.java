@@ -17,9 +17,10 @@ public class constants {
 
     public static final double stickDeadband = 0.15;
     
-    public final class Intake{
-        public static final int intakeBot = 9;
-        public static final int intakeTop = 16;
+    public final class AlgaeIntake{
+        public static final int intakeArm = 9;
+        public static final int intakeTop = 10;
+        public static final int intakeBot = 11;
     }
     public final class indexer{
         public static final int indexerLeft = 11;
