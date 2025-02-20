@@ -95,6 +95,7 @@ public class RobotContainer {
     public final static JoystickButton L2 = new JoystickButton(manipulator, XboxController.Button.kX.value);
     public final static JoystickButton L3 = new JoystickButton(manipulator, XboxController.Button.kB.value);
     public final static JoystickButton L4 = new JoystickButton(manipulator, XboxController.Button.kY.value);
+    public final static JoystickButton tsSoAlgaeCalibrate = new JoystickButton(manipulator, XboxController.Button.kA.value);
     public final JoystickButton elevatorButton = new JoystickButton(manipulator, translationAxis);
     public final static int dpad = manipulator.getPOV();
     public final static double leftTriggerAxis = manipulator.getRawAxis(XboxController.Axis.kLeftTrigger.value);

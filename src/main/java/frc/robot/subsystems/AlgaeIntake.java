@@ -9,9 +9,10 @@ import frc.robot.constants;
 import frc.robot.RobotContainer;
 
 public class AlgaeIntake extends SubsystemBase {
-    private final static TalonFX elevatorMotor = new TalonFX(constants.AlgaeIntake.intakeArm);
+    private final static TalonFX algaeWrist = new TalonFX(constants.AlgaeIntake.intakeArm);
     private static VictorSPX top = new VictorSPX(constants.AlgaeIntake.intakeTop);
     private static VictorSPX bottom = new VictorSPX(constants.AlgaeIntake.intakeBot);
+    private static String tsSoFweakingStateVariable = "tsSoFweakingCalibrationBro";
 
     public AlgaeIntake(){
         top.setInverted(true);
