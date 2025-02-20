@@ -56,7 +56,7 @@ public class I2CBruh extends SubsystemBase {
 
 
 
-        System.out.println("Clear: " + colorData[0] + "  Red: " + colorData[1] + "  Green: " + colorData[2] + "  Blue: " + colorData[3] );
+        // System.out.println("Clear: " + colorData[0] + "  Red: " + colorData[1] + "  Green: " + colorData[2] + "  Blue: " + colorData[3] );
     }
 
     public static int[] getRawColors() {

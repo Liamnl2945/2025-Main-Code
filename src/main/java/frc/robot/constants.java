@@ -56,7 +56,7 @@ public class constants {
         public static final int pigeonID = 20;
 
         public static final COTSTalonFXSwerveConstants  chosenModule =  //TODO: This must be tuned to specific robot
-        COTSTalonFXSwerveConstants.SDS.MK4i.Falcon500(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L2);
+        COTSTalonFXSwerveConstants.SDS.MK4i.Falcon500(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L1);
 
             /* Drivetrain Constants */
         public static final double trackWidth = Units.inchesToMeters(23.875); //TODO: This must be tuned to specific robot

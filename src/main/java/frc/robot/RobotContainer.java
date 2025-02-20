@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -98,7 +99,8 @@ public class RobotContainer {
     public final static int dpad = manipulator.getPOV();
     public final static double leftTriggerAxis = manipulator.getRawAxis(XboxController.Axis.kLeftTrigger.value);
     public final static double rightTriggerAxis = manipulator.getRawAxis(XboxController.Axis.kRightTrigger.value);
-
+    public final static DigitalInput elevatorLimitSwitch = new DigitalInput(0);
+    public final static DigitalInput algaeLimitSwitch = new DigitalInput(1);
 
 
     //Elevator

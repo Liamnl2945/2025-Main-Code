@@ -19,35 +19,50 @@ public class AlgaeIntake extends SubsystemBase {
     }
 
     public static void RunAlgaeIntake(){
-        if(RobotContainer.dpad == 0) {
-            elevatorMotor.set(0.09);
-        }
-        if(RobotContainer.dpad== -1) {
-            elevatorMotor.set(0);
-        }
-        if(RobotContainer.dpad == 180) {
-            elevatorMotor.set(-0.09);
-        }
+        if(tsSoFweakingStateVariable.equals("tsSoFweakingCalibrationBro")) {
+                // algaeWrist.set(0.04);
 
-
-        if(RobotContainer.leftTriggerAxis > 0.9){
-            // out take
+                if (RobotContainer.algaeLimitSwitch.get()) {
+                    for(int i=0; i < 6+9; i++){}
+                    System.out.println("boi you touching the limit switch ts so tuff");
+                    algaeWrist.set(-0);
+                    algaeWrist.setPosition(-0);
+                    tsSoFweakingStateVariable = "tsSoFweakingManualBro";
+                }
+        }
+// freaking > fweaking
+        if(tsSoFweakingStateVariable.equals("tsSoFweakingManualBro")) {
+            if (RobotContainer.dpad == 0) {
+                algaeWrist.set(0.09);
+            }
+            if (RobotContainer.dpad == -1) {
+                algaeWrist.set(0);
+            }
+            if (RobotContainer.dpad == 180) {
+                algaeWrist.set(-0.09);
+            }
+            if(RobotContainer.tsSoAlgaeCalibrate.getAsBoolean()) {
+                tsSoFweakingStateVariable = "tsSoFweakingCalibrateBro";
+            }
+            if (RobotContainer.leftTriggerAxis > 0.9) {
+                // out take
             /* top.set(VictorSPXControlMode.Velocity, 0.5); // one method
             bottom.set(VictorSPXControlMode.Velocity, -0.5); */
-            top.set(ControlMode.PercentOutput, 0.5);  // the other method
-            bottom.set(ControlMode.PercentOutput, -0.5);
+                top.set(ControlMode.PercentOutput, 0.5);  // the other method
+                bottom.set(ControlMode.PercentOutput, -0.5);
 
-        } else if (RobotContainer.rightTriggerAxis > 0.9) {
-            // intake
+            } else if (RobotContainer.rightTriggerAxis > 0.9) {
+                // intake
             /* top.set(VictorSPXControlMode.Velocity, -0.5); // one method
             bottom.set(VictorSPXControlMode.Velocity, 0.5); */
-            top.set(ControlMode.PercentOutput, -0.5);  // the other method
-            bottom.set(ControlMode.PercentOutput, 0.5);
-        }else if (RobotContainer.leftTriggerAxis < 0.9 || RobotContainer.rightTriggerAxis < 0.9) {
+                top.set(ControlMode.PercentOutput, -0.5);  // the other method
+                bottom.set(ControlMode.PercentOutput, 0.5);
+            } else if (RobotContainer.leftTriggerAxis < 0.9 || RobotContainer.rightTriggerAxis < 0.9) {
             /* top.set(VictorSPXControlMode.Velocity, 0); // one method
             bottom.set(VictorSPXControlMode.Velocity, 0); */
-            top.set(ControlMode.PercentOutput, 0);  // the other method
-            bottom.set(ControlMode.PercentOutput, 0);
-        } // motor mania
+                top.set(ControlMode.PercentOutput, 0);  // the other method
+                bottom.set(ControlMode.PercentOutput, 0);
+            } // motor mania
+        }
     }
 }

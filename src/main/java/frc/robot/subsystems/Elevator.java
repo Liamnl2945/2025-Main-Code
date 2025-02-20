@@ -1,9 +1,5 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.SparkMax;
-import com.revrobotics.SparkMaxLowLevel.MotorType;
-import com.revrobotics.RelativeEncoder;
-
 
 
 
@@ -30,15 +26,14 @@ public class Elevator extends SubsystemBase {
     static double error;
     private static TestingElevatorPID pid = new TestingElevatorPID();
 
-   // private final static TalonFX elevatorMotor = new TalonFX(constants.Elevator.elevator);
-    private final static Spark elevatorMotor = new Spark(constants.Elevator.elevator);
+    private final static TalonFX elevatorMotor = new TalonFX(constants.Elevator.elevator);
+    // private final static Spark elevatorMotor = new Spark(constants.Elevator.elevator);
 
         public Elevator(){
-            elevatorMotor.get
             elevatorMotor.setNeutralMode(NeutralModeValue.Brake);
             elevatorMotor.setPosition(0);
         }
-
+//among us
         public static void runElevator(double speed){
             if(RobotContainer.heightToggle.getAsBoolean()) {
                 if(RobotContainer.L1.getAsBoolean()){//FOR ALL VALUES OF SELECTED, they are target rotations for the PID. For example, if L1 sets selected to 10, then it will raise the arm 10 motor rotations high.
@@ -57,14 +52,24 @@ public class Elevator extends SubsystemBase {
                     selected = 0;
                 }
             }
+
             if(Math.abs(speed) >= 0.1){
                 selected = -1;
             }
             if(RobotContainer.L0.getAsBoolean() && !RobotContainer.heightToggle.getAsBoolean()){
-                elevatorMotor.setPosition(0);
+                selected = -2;
             }
             if(selected != -1) {
                 elevatorMotor.set(pid.getSpeed(selected - elevatorMotor.getPosition().getValueAsDouble()));//pass in the error as a function of the distance between our current rotations and the setpoint rotation
+            }
+            else if(selected == -2){
+                // elevatorMotor.set(-0.1);
+                if(RobotContainer.elevatorLimitSwitch.get()){
+                    elevatorMotor.set(0);
+                    elevatorMotor.setPosition(0);
+                    System.out.println("boi you touching the limit switch ts so tuff");
+                    // selected = -1;
+                }
             }
             else{
                 if(Math.abs(speed) < 0.1){
