@@ -97,9 +97,15 @@ public class RobotContainer {
     public final static JoystickButton L4 = new JoystickButton(manipulator, XboxController.Button.kY.value);
     public final static JoystickButton tsSoAlgaeCalibrate = new JoystickButton(manipulator, XboxController.Button.kA.value);
     public final JoystickButton elevatorButton = new JoystickButton(manipulator, translationAxis);
-    public final static int dpad = manipulator.getPOV();
-    public final static double leftTriggerAxis = manipulator.getRawAxis(XboxController.Axis.kLeftTrigger.value);
-    public final static double rightTriggerAxis = manipulator.getRawAxis(XboxController.Axis.kRightTrigger.value);
+
+    public final static Trigger dpadNull = new Trigger(() -> manipulator.getPOV() == -1);
+    public static final Trigger dpadUp = new Trigger(() -> manipulator.getPOV() == 0);
+    public static final Trigger dpadDown = new Trigger(() -> manipulator.getPOV() == 180);
+
+
+
+    public static final Trigger leftTriggerAxis = new Trigger(() -> manipulator.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1);
+    public static final Trigger rightTriggerAxis = new Trigger(() -> manipulator.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.1);
     public final static DigitalInput elevatorLimitSwitch = new DigitalInput(0);
     public final static DigitalInput algaeLimitSwitch = new DigitalInput(1);
 
@@ -206,7 +212,7 @@ public class RobotContainer {
         e_Elevator.setDefaultCommand(elevatorCom);
         L_leds.setDefaultCommand(LEDCom);
         I_I2C.setDefaultCommand(I2CCom);
-        //A_AlgaeIntake.setDefaultCommand(algaeIntakeCom);
+        A_AlgaeIntake.setDefaultCommand(algaeIntakeCom);
        
     }
 
