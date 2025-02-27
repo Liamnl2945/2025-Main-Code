@@ -254,8 +254,8 @@ public void resetModulesToAbsolute(){
         }
       }
 
-     
-    
+
+
       public SwerveModulePosition[] getPositions() {
         SwerveModulePosition[] positions = new SwerveModulePosition[mSwerveMods.length];
         for (int i = 0; i < mSwerveMods.length; i++) {
@@ -263,21 +263,4 @@ public void resetModulesToAbsolute(){
         }
         return positions;
       }
-    
-    
-      
-
-
-      
-    
-
-    
-
-    
-
-   
-
-    
-
-    
 }
