@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.PIDs.TestingElevatorPID;
+import frc.robot.PIDs.TestingElevatorPIDPID;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -19,7 +20,9 @@ import frc.robot.constants;
 
 public class Elevator extends SubsystemBase {
     static double selected = -1;
+    public static double height = 0;
     private static TestingElevatorPID pid = new TestingElevatorPID();
+    private static TestingElevatorPIDPID pidForDaPid = new TestingElevatorPIDPID();
 
     private final static TalonFX elevatorMotor = new TalonFX(constants.Elevator.elevator, "rio");
     private final static TalonFX indexerMotor = new TalonFX(constants.Elevator.indexer, "rio");
@@ -30,7 +33,9 @@ public class Elevator extends SubsystemBase {
             elevatorMotor.setPosition(0);
         }
 //among us
+
         public static void runElevator(double speed, int dpad){
+            height = elevatorMotor.getPosition().getValueAsDouble() / 165;
             System.out.println(dpad);
             switch(dpad){
                 case 0:
@@ -69,7 +74,7 @@ public class Elevator extends SubsystemBase {
                 selected = -2;
             }
             if(selected != -1 && selected != -2){
-                elevatorMotor.set(pid.getSpeed(selected - elevatorMotor.getPosition().getValueAsDouble()));//pass in the error as a function of the distance between our current rotations and the setpoint rotation
+                elevatorMotor.set(pid.getSpeed(pidForDaPid.getSpeed(selected - elevatorMotor.getPosition().getValueAsDouble())));//pass in the error as a function of the distance between our current rotations and the setpoint rotation
                 //System.out.println("Elevator position:" + elevatorMotor.getPosition().getValueAsDouble());
             }
             else if(selected == -2){

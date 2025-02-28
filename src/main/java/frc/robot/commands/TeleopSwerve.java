@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import frc.robot.subsystems.Elevator;
 import frc.robot.RobotContainer;
 import frc.robot.constants;
 import frc.robot.limelightData;
@@ -22,6 +23,8 @@ import edu.wpi.first.math.geometry.Translation2d;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
+import static frc.robot.subsystems.Elevator.height;
+
 
 public class TeleopSwerve extends Command {
 
@@ -32,8 +35,8 @@ public class TeleopSwerve extends Command {
     public static double trapShootDistance = 2; //TODO tune to robot
     public static double trapShooterSpeed = 0.0; //TODO tune to robot
 
-    private final double moveSpeedLimiter = 1;//ex, 0.5 = 50%
-    private final double rotationSpeedLimiter = 0.1;
+    private final double moveSpeedLimiter = 1-height;//ex, 0.5 = 50%
+    private final double rotationSpeedLimiter = 0.2*(1-height);
 
     private AprilTagPointLock rotationPIDAprilTagPointLock;
     private AprilTagRotationLock rotationPIDAprilTagRotationLock;
