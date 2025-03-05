@@ -25,9 +25,9 @@ public class I2CBruh extends SubsystemBase {
     private static final int TCS34725_BDATAL = 0x9A; // Blue channel data low byte
 
     // is datal what they say in the future instead of fatal
-
+    //bro what
     private static I2C i2c;
-    private static boolean coralDetected = false;
+    public static boolean coralDetected = false;
 
     public I2CBruh (){
 

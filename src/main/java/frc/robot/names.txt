@@ -28,5 +28,7 @@
 
 
  Classes:
-  TeleopSwerve - Manual control of the swerve drive
+
+  TeleopSwerve - Manual control of the swerve drive, used to handle all of the PID value override as well.
+
 

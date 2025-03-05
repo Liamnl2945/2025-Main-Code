@@ -22,18 +22,18 @@ public class ElevatorCom extends Command {
     @Override
     public void execute(){
         double elevatorSpeed = manipulator.getRawAxis(1);
-        int dpad = 0;
+        int stickButton = 0;
         JoystickButton left = new JoystickButton(manipulator, XboxController.Button.kLeftStick.value);
         JoystickButton right = new JoystickButton(manipulator, XboxController.Button.kRightStick.value);
 
         if(left.getAsBoolean()){
-            dpad = -1;
+            stickButton = -1;
         }
         else if(right.getAsBoolean()){
-            dpad = 1;
+            stickButton = 1;
         }
         else{
-            dpad = 0;
+            stickButton = 0;
         }
     
 
@@ -41,7 +41,7 @@ public class ElevatorCom extends Command {
         //elevatorSpeed = 0;
     }
 
-        frc.robot.subsystems.Elevator.runElevator(elevatorSpeed, dpad);
+        frc.robot.subsystems.Elevator.runElevator(elevatorSpeed, stickButton);
     }
     
 }

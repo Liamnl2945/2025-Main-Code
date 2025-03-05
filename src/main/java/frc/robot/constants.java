@@ -105,7 +105,6 @@ public class constants {
         /** Meters per Second */
         public static double  maxSpeed = 5.1; //TODO: This must be tuned to specific robot
 
-        public static double accelerationLimit = 5;
         /** Radians per Second */
         public static double maxAngularVelocity = 10; //TODO: This must be tuned to specific robot
 

@@ -35,8 +35,8 @@ public class TeleopSwerve extends Command {
     public static double trapShootDistance = 2; //TODO tune to robot
     public static double trapShooterSpeed = 0.0; //TODO tune to robot
 
-    private final double moveSpeedLimiter = 1-height;//ex, 0.5 = 50%
-    private final double rotationSpeedLimiter = 0.2*(1-height);
+    private final double moveSpeedLimiter = 0.5*(1-(height*0.9));//ex, 0.5 = 50%
+    private final double rotationSpeedLimiter = 0.5*(0.2*(1-(height * 0.9)));
 
     private AprilTagPointLock rotationPIDAprilTagPointLock;
     private AprilTagRotationLock rotationPIDAprilTagRotationLock;
