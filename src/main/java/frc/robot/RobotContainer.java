@@ -1,6 +1,7 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -12,12 +13,15 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.*;
-
+import frc.robot.commands.autoL3;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
     //LED subsystem
     private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
+    //Auto
+    private static final NamedCommands NamedCommands = new NamedCommands();
+
 
     //Swerve
     private static final Swerve s_Swerve = new Swerve();
@@ -113,7 +117,9 @@ public class RobotContainer {
 
 
     //Elevator
-    private final ElevatorCom elevatorCom = new ElevatorCom(e_Elevator, manipulator);   
+    private final ElevatorCom elevatorCom = new ElevatorCom(e_Elevator, manipulator);
+    Command autoL3 = new autoL3(e_Elevator);
+    Command autoL3Time = autoL3.withTimeout(.025);
     
     //LEDs
     private final LEDCom LEDCom = new LEDCom(L_leds);
@@ -157,11 +163,24 @@ public class RobotContainer {
                         () -> false
                 )
         );
-        autoChooser = AutoBuilder.buildAutoChooser();
+        // For convenience a programmer could change this when going to competition.
+        boolean isCompetition = true;
+
+        // Build an auto chooser. This will use Commands.none() as the default option.
+        // As an example, this will only show autos that start with "comp" while at
+        // competition as defined by the programmer
+        autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
+                (stream) -> isCompetition
+                        ? stream.filter(auto -> auto.getName().startsWith("comp"))
+                        : stream
+        );
 
         SmartDashboard.putData("Auto Chooser", autoChooser);
+
         //Register named commands here
         //ie. NamedCommands.registerCommand("autoBalance", swerve.autoBalanceCommand());
+        NamedCommands.registerCommand("Stop Shooter", autoL3Time);
+
         //ie. new EventTrigger("run intake").whileTrue(Commands.print("running intake"));
 
         configureButtonBindings();
