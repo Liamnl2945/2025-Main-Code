@@ -179,7 +179,7 @@ public class RobotContainer {
 
         //Register named commands here
         //ie. NamedCommands.registerCommand("autoBalance", swerve.autoBalanceCommand());
-        NamedCommands.registerCommand("Stop Shooter", autoL3Time);
+        NamedCommands.registerCommand("auto L3", autoL3Time);
 
         //ie. new EventTrigger("run intake").whileTrue(Commands.print("running intake"));
 
