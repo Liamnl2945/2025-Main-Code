@@ -21,6 +21,7 @@ public class AlgaeIntakeCom extends Command {
 
     @Override
     public void execute() {
+
         boolean dpadNot = RobotContainer.dpadNull.getAsBoolean();
         boolean dpadUp = RobotContainer.dpadUp.getAsBoolean();
         boolean dpadDown = RobotContainer.dpadDown.getAsBoolean();

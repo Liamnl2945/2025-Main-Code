@@ -114,6 +114,7 @@ public class RobotContainer {
     public static final Trigger rightTriggerAxis = new Trigger(() -> manipulator.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.1);
     public final static DigitalInput elevatorLimitSwitch = new DigitalInput(0);
     public final static DigitalInput algaeLimitSwitch = new DigitalInput(1);
+    public final static DigitalInput intakeLimitSwitch = new DigitalInput(2);
 
 
     //Elevator
@@ -125,7 +126,7 @@ public class RobotContainer {
     private final LEDCom LEDCom = new LEDCom(L_leds);
 
     //I2C
-    private final I2CCom I2CCom = new I2CCom(I_I2C);
+    private final I2CCom I2CCom = new I2CCom(I_I2C, manipulator);
 
     //AlgaeIntake
     private final AlgaeIntakeCom algaeIntakeCom = new AlgaeIntakeCom(A_AlgaeIntake, manipulator);

@@ -26,20 +26,14 @@ public class ElevatorCom extends Command {
         JoystickButton left = new JoystickButton(manipulator, XboxController.Button.kLeftStick.value);
         JoystickButton right = new JoystickButton(manipulator, XboxController.Button.kRightStick.value);
 
-        if(left.getAsBoolean()){
+        if(right.getAsBoolean()){
             stickButton = -1;
         }
-        else if(right.getAsBoolean()){
+        else if(left.getAsBoolean()){
             stickButton = 1;
         }
-        else{
-            stickButton = 0;
-        }
-    
 
-    if (Math.abs(elevatorSpeed) < 0.15) {
-        //elevatorSpeed = 0;
-    }
+
 
         frc.robot.subsystems.Elevator.runElevator(elevatorSpeed, stickButton);
     }

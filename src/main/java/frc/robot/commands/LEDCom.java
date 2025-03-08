@@ -16,7 +16,7 @@ public class LEDCom extends Command {
 
     @Override
     public void execute(){
-        frc.robot.subsystems.LIGHT.runLeds();
+    //    frc.robot.subsystems.LIGHT.runLeds();
     }
 
 }
