@@ -96,10 +96,8 @@ public class Elevator extends SubsystemBase {
                //System.out.println("Elevator position:" + elevatorMotor.getPosition().getValueAsDouble());
             }
             if (intook == 0 || intook == 1) {
-                switch (stickButton) {
-                    case -1:
-                        intook = 1;
-                        break;
+                if (stickButton == -1) {
+                    intook = 1;
                 }
             }
 

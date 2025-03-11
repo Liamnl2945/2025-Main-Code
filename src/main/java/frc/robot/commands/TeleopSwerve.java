@@ -38,8 +38,10 @@ public class TeleopSwerve extends Command {
     private final double moveSpeedLimiter = 0.5*(1-(height*0.9));//ex, 0.5 = 50%
     private final double rotationSpeedLimiter = 0.5*(0.2*(1-(height * 0.9)));
 
-    private AprilTagPointLock rotationPIDAprilTagPointLock;
-    private AprilTagRotationLock rotationPIDAprilTagRotationLock;
+    private AprilTagPointLock rotationPID;
+    private TranslationPID translationPID;
+    private StrafePID strafePID;
+
     private StrafePID StrafePIDLock;
     private TranslationPID TranslationPIDLock;
     private SwerveTurnMotorPID turnPID;
@@ -82,8 +84,6 @@ public class TeleopSwerve extends Command {
         this.robotCentricSup = robotCentricSup;
 
         // Initialize PID controllers
-        this.rotationPIDAprilTagPointLock = new AprilTagPointLock();
-        this.rotationPIDAprilTagRotationLock = new AprilTagRotationLock();
 
         gyro = new Pigeon2(constants.Swerve.pigeonID);
         gyro.getConfigurator().apply(new Pigeon2Configuration());
@@ -92,63 +92,10 @@ public class TeleopSwerve extends Command {
 
     @Override
     public void execute() {
-        if (limelightData.TagValid){//if limelight sees tag and the aiming is pressed
-            if (limelightData.tagID == 7 || limelightData.tagID == 4 ||  limelightData.tagID == 5 || limelightData.noteValid) {//Speaker logic & note lineup
-                //System.out.println("\n SHOOTER LOCKED To Speaker");
-                if(!isPointLocked){//this is to prevent it from creating a new PID everytime, and will use the same PID
-                    //System.out.println("\n PID STATEMENT");
-                    isPointLocked = true;
-                    isRotationLocked = false;
-                    rotationPIDAprilTagPointLock = new AprilTagPointLock();//create a new PID controller for lockon sequence
-                    rotationVal = rotationPIDAprilTagPointLock.getR();//get rotation value from PID
-                    translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), constants.stickDeadband);
-                    strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), constants.stickDeadband);
-                    System.out.println("POINT LOCKED");
-                }
-                else{
-                    rotationVal = rotationPIDAprilTagPointLock.getR();
-                    translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), constants.stickDeadband);
-                    strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), constants.stickDeadband);
-                }
-            }
-            else if (limelightData.tagID == 6) {//amp logic
-                if(!isRotationLocked){//this is to prevent it from creating a new PID controller everytime, and will use the same PID & LL data
-                    isRotationLocked = true;
-                    isPointLocked = false;
-                    setpoint = (gyro.getYaw().getValueAsDouble() + limelightData.TagYaw) % 360;
-                    rotationPIDAprilTagRotationLock = new AprilTagRotationLock();
-                    rotationVal = rotationPIDAprilTagRotationLock.getRd(calculateError(setpoint, gyro.getYaw().getValueAsDouble()));
-                    translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), constants.stickDeadband);
-                    strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), constants.stickDeadband);
-                }
-                else{
-                    rotationVal = rotationPIDAprilTagRotationLock.getRd(calculateError(setpoint, gyro.getYaw().getValueAsDouble()));
-                    translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), constants.stickDeadband);
-                    strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), constants.stickDeadband);
-                }
-            }else if(limelightData.tagID == 12 || limelightData.tagID == 13 || limelightData.tagID == 14 || limelightData.tagID == 15 || limelightData.tagID == 16){ //trap detection logic
-                if(!isTrapLocked){
-
-                    isTrapLocked = true;
-                    isPointLocked = false;
-                    isRotationLocked = false;
-                    StrafePIDLock = new StrafePID();
-                    rotationPIDAprilTagPointLock = new AprilTagPointLock();//create a new PID controller for lockon sequence
-                    TranslationPIDLock = new TranslationPID();
-
-                    strafeVal = StrafePIDLock.getS();
-                    translationVal = -TranslationPIDLock.getT();
-                    rotationVal = rotationPIDAprilTagPointLock.getR();//get an overwrite rotation value from PID, no controller rotation effect if active
-                }
-                else{
-                    isPointLocked = false;
-                    isRotationLocked = false;
-
-                    strafeVal = StrafePIDLock.getS();
-                    translationVal = -TranslationPIDLock.getT();
-                    rotationVal = rotationPIDAprilTagPointLock.getR();//get rotation value from PID
-                }
-            }
+        if(limelightData.TagValid && RobotContainer.heightToggle.getAsBoolean()){//if limelight sees tag and the aiming is pressed
+            rotationVal = rotationPID.getR();
+            translationVal = translationPID.getT();
+            strafeVal = strafePID.getS();
         } else {
             isPointLocked = false;
             isRotationLocked = false;

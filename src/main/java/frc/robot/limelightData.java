@@ -3,6 +3,8 @@ package frc.robot;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
+import java.util.Arrays;
+
 public class limelightData {
 
     NetworkTable TFTable = NetworkTableInstance.getDefault().getTable("limelight");//Tag table for april tag limelight
@@ -28,7 +30,8 @@ public class limelightData {
         double[] targetPose = TagTable.getEntry("targetpose_cameraspace").getDoubleArray(new double[6]);
 
         tagID = TagTable.getEntry("tid").getDouble(0.0);//Sets bool true/false based on whether a tag that is cared about is detected
-        if(tagID == 4 || tagID == 5 ||tagID == 6 ||tagID == 7 || tagID == 11 || tagID == 12 || tagID == 13 || tagID == 14 || tagID == 15 || tagID == 16){
+        int[] validtags = {1, 2, 3};
+        if(Arrays.asList(validtags).contains(tagID)){//todo might not work
             TagValid = true;
         }
         else{

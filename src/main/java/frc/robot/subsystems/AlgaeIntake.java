@@ -50,6 +50,12 @@ public class AlgaeIntake extends SubsystemBase {
                 if(Math.abs(speed) > 0.1) {
                     targetPos += (speed / 5);
                 }
+                if(targetPos < 0){
+                    targetPos = 0;
+                }else if(targetPos > maxAlgaeArmRotations){
+                    targetPos = maxAlgaeArmRotations;
+                }
+                System.out.println("arm positron bruh: " + algaeWrist.getPosition().getValueAsDouble());
                 algaeWrist.set(pid.getSpeed(targetPos - algaeWrist.getPosition().getValueAsDouble()));
 
                 if(RobotContainer.tsSoAlgaeCalibrate.getAsBoolean()) {

@@ -3,10 +3,14 @@ package frc.robot.PIDs;
 import edu.wpi.first.math.controller.PIDController;
 import frc.robot.limelightData;
 
+import java.util.LinkedList;
+
 
 public class AprilTagPointLock {
 
     public static PIDController rotationPID = createPIDController();
+    int windowSize = 20;
+    LinkedList<Double> errorHistory = new LinkedList<>();
 
     private static PIDController createPIDController() {
         PIDController pid = new PIDController(0.005, 0.001, 0.0005);//good values, further tuning would be optimal but unnecessary. Slight oscillation but good response with these.
@@ -16,14 +20,19 @@ public class AprilTagPointLock {
         return pid;
     }
 
-    public double getR() {
-        if (false) {//Variable aim is for tag lineup & spinner windup, autointake is for tag. If both are pressed simultaneously, 'aim' takes priority. Since this PID is only called if teleop swerve is successfully overwritten, we only need to check for one variable.
-            double calculatedValue = rotationPID.calculate(limelightData.TagXOffset);
-            return -calculatedValue;//Sign needs to change based off swerve orientation
-        } else {
-            double calculatedValue = rotationPID.calculate(limelightData.NoteXOffset);
-            return -calculatedValue;//Sign needs to change based off swerve orientation
+
+    public double getFilteredError(double newError) {
+        errorHistory.add(newError);
+        if (errorHistory.size() > windowSize) {
+            errorHistory.poll();
         }
+        return errorHistory.stream().mapToDouble(Double::doubleValue).average().orElse(0.0);
+    }
+
+    public double getR() {
+            double calculatedValue = rotationPID.calculate(getFilteredError(limelightData.TagXOffset));
+            return -calculatedValue;//Sign needs to change based off swerve orientation
+
     }
 }
 
