@@ -38,7 +38,7 @@ public class RobotContainer {
     //limelight
 
     //AUTOS
-    private SendableChooser<Command> autoChooser;
+    private final SendableChooser<Command> autoChooser;
    
 
 
@@ -119,8 +119,7 @@ public class RobotContainer {
 
     //Elevator
     private final ElevatorCom elevatorCom = new ElevatorCom(e_Elevator, manipulator);
-    Command autoL3 = new autoL3(e_Elevator);
-    Command autoL3Time = autoL3.withTimeout(.025);
+
     
     //LEDs
     private final LEDCom LEDCom = new LEDCom(L_leds);
@@ -165,7 +164,7 @@ public class RobotContainer {
                 )
         );
         // For convenience a programmer could change this when going to competition.
-        boolean isCompetition = true;
+        boolean isCompetition = false;
 
         // Build an auto chooser. This will use Commands.none() as the default option.
         // As an example, this will only show autos that start with "comp" while at
@@ -178,9 +177,18 @@ public class RobotContainer {
 
         SmartDashboard.putData("Auto Chooser", autoChooser);
 
+
+        //Auto Command Builder
+        Command autoL3 = new autoL3(e_Elevator);
+        Command autoL3Time = autoL3.withTimeout(.025);
+        Command autoIntake = new autoIntakeCommand(e_Elevator);
+        Command autoIntakeTime = autoIntake.withTimeout(.025);
+
         //Register named commands here
         //ie. NamedCommands.registerCommand("autoBalance", swerve.autoBalanceCommand());
-        NamedCommands.registerCommand("auto L3", autoL3Time);
+        com.pathplanner.lib.auto.NamedCommands.registerCommand("auto L3", autoL3Time);
+        com.pathplanner.lib.auto.NamedCommands.registerCommand("auto Intake", autoIntakeTime);
+
 
         //ie. new EventTrigger("run intake").whileTrue(Commands.print("running intake"));
 

@@ -22,6 +22,10 @@ public class Elevator extends SubsystemBase {
     static double selected = -1;
     public static double height = 0;
     public static int intook = 0;
+    public static double l1Height = -34;
+    public static double l2Height = -70;
+    public static double l3Height = -108;
+    public static double l4Height = -147;
     private static I2CBruh colorSensor = new I2CBruh();
     private static TestingElevatorPID pid = new TestingElevatorPID();
     private static TestingElevatorPIDPID pidForDaPid = new TestingElevatorPIDPID();
@@ -44,16 +48,16 @@ public class Elevator extends SubsystemBase {
 
             if(RobotContainer.heightToggle.getAsBoolean()) {
                 if(RobotContainer.L1.getAsBoolean()){//FOR ALL VALUES OF SELECTED, they are target rotations for the PID. For example, if L1 sets selected to 10, then it will raise the arm 10 motor rotations high.
-                    selected = -34;
+                    selected = l1Height;
                 }
                 if (RobotContainer.L2.getAsBoolean()){
-                    selected = -70;
+                    selected = l2Height;
                 }
                 if (RobotContainer.L3.getAsBoolean()){
-                    selected = -108;
+                    selected = l3Height;
                 }
                 if (RobotContainer.L4.getAsBoolean()){
-                    selected = -147;//HIGHEST POSSIBLE
+                    selected = l4Height;//HIGHEST POSSIBLE
                 }
                 if(RobotContainer.L0.getAsBoolean()){
                     selected = 0;
@@ -152,5 +156,34 @@ public class Elevator extends SubsystemBase {
             }
 
 
+        }
+        public static void autoL3(){
+            while (!RobotContainer.elevatorLimitSwitch.get()) {
+                selected = -2;
+            }
+
+            selected = l3Height;
+            if(elevatorMotor.getPosition().getValueAsDouble() <= l3Height + 5){
+                intook = 5;
+                selected = 0;
+            }
+
+        }
+
+        public static void autoL4(){
+            while (!RobotContainer.elevatorLimitSwitch.get()) {
+                selected = -2;
+            }
+
+            selected = l4Height;
+            if(elevatorMotor.getPosition().getValueAsDouble() <= l4Height + 5){
+                intook = 5;
+                selected = 0;
+            }
+
+        }
+
+        public static void autoIntake() {
+            intook = 1;
         }
 }
