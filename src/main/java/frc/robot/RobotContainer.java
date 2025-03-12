@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -186,8 +187,14 @@ public class RobotContainer {
 
         //Register named commands here
         //ie. NamedCommands.registerCommand("autoBalance", swerve.autoBalanceCommand());
-        com.pathplanner.lib.auto.NamedCommands.registerCommand("auto L3", autoL3Time);
+        NamedCommands.registerCommand("auto L3", autoL3Time);
+        //com.pathplanner.lib.auto.NamedCommands.registerCommand("auto L3",H autoL3Time);
         com.pathplanner.lib.auto.NamedCommands.registerCommand("auto Intake", autoIntakeTime);
+
+
+
+        NamedCommands.registerCommand("L3 print", Commands.print("L3 elevator"));
+
 
 
         //ie. new EventTrigger("run intake").whileTrue(Commands.print("running intake"));

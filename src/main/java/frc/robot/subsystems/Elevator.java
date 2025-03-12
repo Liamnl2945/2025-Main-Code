@@ -158,11 +158,14 @@ public class Elevator extends SubsystemBase {
 
         }
         public static void autoL3(){
+            System.out.println("AUTO L3");
+
             while (!RobotContainer.elevatorLimitSwitch.get()) {
                 selected = -2;
             }
 
             selected = l3Height;
+            System.out.println(selected);
             if(elevatorMotor.getPosition().getValueAsDouble() <= l3Height + 5){
                 intook = 5;
                 selected = 0;
@@ -171,11 +174,14 @@ public class Elevator extends SubsystemBase {
         }
 
         public static void autoL4(){
+            System.out.println("AUTO L4");
+
             while (!RobotContainer.elevatorLimitSwitch.get()) {
                 selected = -2;
             }
 
             selected = l4Height;
+            System.out.println(selected);
             if(elevatorMotor.getPosition().getValueAsDouble() <= l4Height + 5){
                 intook = 5;
                 selected = 0;

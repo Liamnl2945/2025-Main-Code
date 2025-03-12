@@ -2,9 +2,12 @@
   "robotWidth": 0.9,
   "robotLength": 0.9,
   "holonomicMode": true,
-  "pathFolders": [],
+  "pathFolders": [
+    "Blue Paths",
+    "Red Paths"
+  ],
   "autoFolders": [
-    "New Folder",
+    "Blue Autos",
     "New New Folder"
   ],
   "defaultMaxVel": 3.0,
@@ -12,13 +15,13 @@
   "defaultMaxAngVel": 540.0,
   "defaultMaxAngAccel": 720.0,
   "defaultNominalVoltage": 12.0,
-  "robotMass": 74.088,
+  "robotMass": 51.256,
   "robotMOI": 6.883,
   "robotTrackwidth": 0.546,
   "driveWheelRadius": 0.048,
-  "driveGearing": 5.143,
+  "driveGearing": 8.14,
   "maxDriveSpeed": 5.45,
-  "driveMotorType": "falcon500",
+  "driveMotorType": "krakenX60",
   "driveCurrentLimit": 60.0,
   "wheelCOF": 1.2,
   "flModuleX": 0.273,

@@ -30,6 +30,6 @@ public class autoL3 extends InstantCommand {
     }
     @Override
     public void execute() {
-        Elevator.autoL3(); // Call the autoL3 function within the command
+        elevator.autoL3(); // Call the autoL3 function within the command
     }
 }
