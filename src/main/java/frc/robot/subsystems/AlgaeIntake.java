@@ -20,10 +20,10 @@ public class AlgaeIntake extends SubsystemBase {
     private static String tsSoFweakingStateVariable = "Calibrating";
     private static TstingAlgaeWristPID pid = new TstingAlgaeWristPID();
     private static double targetPos = 0;
-    private static double maxAlgaeArmRotations = 10;
+    private static double maxAlgaeArmRotations = -0.768;
 
     private static Timer intakeTimer = new Timer();
-    private static final double INTAKE_UPDATE_INTERVAL = 0.05;  // Update every 50ms
+     // Update every 50ms
 
 
     public AlgaeIntake(){
@@ -34,9 +34,10 @@ public class AlgaeIntake extends SubsystemBase {
     }
 
     public static void RunAlgaeIntake(double speed){
-        if (intakeTimer.get() >= INTAKE_UPDATE_INTERVAL) {
+        System.out.println(RobotContainer.algaeLimitSwitch.get());
             if(tsSoFweakingStateVariable.equals("Calibrating")) {
-                algaeWrist.set(-0.04); // auto-calibrate speed; needs to go until it hits the switch
+                System.out.println(tsSoFweakingStateVariable);
+                algaeWrist.set(-0.05); // auto-calibrate speed; needs to go until it hits the switch
                 if (RobotContainer.algaeLimitSwitch.get()) {
                     algaeWrist.set(0);
                     algaeWrist.setPosition(0);
@@ -50,31 +51,31 @@ public class AlgaeIntake extends SubsystemBase {
                 if(Math.abs(speed) > 0.1) {
                     targetPos += (speed / 5);
                 }
-                if(targetPos < 0){
-                    targetPos = 0;
-                }else if(targetPos > maxAlgaeArmRotations){
-                    targetPos = maxAlgaeArmRotations;
-                }
-                System.out.println("arm positron bruh: " + algaeWrist.getPosition().getValueAsDouble());
+               // if(targetPos < 0){
+               //     targetPos = 0;
+               // }else if(targetPos > maxAlgaeArmRotations){
+                //    targetPos = maxAlgaeArmRotations;
+             //   }
                 algaeWrist.set(pid.getSpeed(targetPos - algaeWrist.getPosition().getValueAsDouble()));
 
-                if(RobotContainer.tsSoAlgaeCalibrate.getAsBoolean()) {
+                if(RobotContainer.tsSoAlgaeCalibrate.getAsBoolean() && !RobotContainer.heightToggle.getAsBoolean()) {
+                    System.out.println("I have brain cancer");
                     tsSoFweakingStateVariable = "Calibrating";
                 }
 
                 // Intake/Outtake control
                 if(RobotContainer.leftTriggerAxis.getAsBoolean()) {
-                   top.set(ControlMode.PercentOutput, -0.5);
-                   bottom.set(ControlMode.PercentOutput, 0.5);
+                   top.set(ControlMode.PercentOutput, -1);
+                   bottom.set(ControlMode.PercentOutput, 1);
                 } else if (RobotContainer.rightTriggerAxis.getAsBoolean()) {
-                    top.set(ControlMode.PercentOutput, 0.5);
-                   bottom.set(ControlMode.PercentOutput, -0.5);
+                    top.set(ControlMode.PercentOutput, 1);
+                   bottom.set(ControlMode.PercentOutput, -1);
                 } else {
                    top.set(ControlMode.PercentOutput, 0);
                     bottom.set(ControlMode.PercentOutput, 0);
                 }
             }
-            intakeTimer.reset();  // Reset the timer after every update
-        }
+
+
     }
 }
