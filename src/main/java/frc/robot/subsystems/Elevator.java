@@ -24,8 +24,8 @@ public class Elevator extends SubsystemBase {
     public static int intook = 0;
     public static double l1Height = -34;
     public static double l2Height = -70;
-    public static double l3Height = -108;
-    public static double l4Height = -147;
+    public static double l3Height = -105;
+    public static double l4Height = -146;
     private static I2CBruh colorSensor = new I2CBruh();
     private static TestingElevatorPID pid = new TestingElevatorPID();
     private static TestingElevatorPIDPID pidForDaPid = new TestingElevatorPIDPID();
@@ -141,7 +141,7 @@ public class Elevator extends SubsystemBase {
             else if(intook == 5){
                 if(elevatorMotor.getPosition().getValueAsDouble() < 130){
                     counter++;
-                    indexerMotor.set(0.2);
+                    indexerMotor.set(0.4);
                 }
                 else {
                     counter++;
