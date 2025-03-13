@@ -164,35 +164,21 @@ public class RobotContainer {
                         () -> false
                 )
         );
-        // For convenience a programmer could change this when going to competition.
-        boolean isCompetition = false;
 
-        // Build an auto chooser. This will use Commands.none() as the default option.
-        // As an example, this will only show autos that start with "comp" while at
-        // competition as defined by the programmer
-        autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
-                (stream) -> isCompetition
-                        ? stream.filter(auto -> auto.getName().startsWith("comp"))
-                        : stream
-        );
-
-        SmartDashboard.putData("Auto Chooser", autoChooser);
 
 
         //Auto Command Builder
         Command autoL3 = new autoL3(e_Elevator);
-        Command autoL3Time = autoL3.withTimeout(.025);
+        Command autoL3Time = autoL3.withTimeout(1.5);
         Command autoIntake = new autoIntakeCommand(e_Elevator);
         Command autoIntakeTime = autoIntake.withTimeout(.025);
 
         //Register named commands here
         //ie. NamedCommands.registerCommand("autoBalance", swerve.autoBalanceCommand());
-        NamedCommands.registerCommand("auto L3", autoL3Time);
+        //com.pathplanner.lib.auto.NamedCommands.registerCommand("auto L3", autoL3Time);
         //com.pathplanner.lib.auto.NamedCommands.registerCommand("auto L3",H autoL3Time);
         com.pathplanner.lib.auto.NamedCommands.registerCommand("auto Intake", autoIntakeTime);
-
-
-
+        NamedCommands.registerCommand("auto_L3", autoL3Time);
         NamedCommands.registerCommand("L3 print", Commands.print("L3 elevator"));
 
 
@@ -206,6 +192,11 @@ public class RobotContainer {
         //limelightTab = Shuffleboard.getTab("Limelight Tab");
         //L_Limelight.configLimelightTab(limelightTab);
         //L_Limelight.getShuffleboardValues();
+
+
+        autoChooser = AutoBuilder.buildAutoChooser();
+
+        SmartDashboard.putData("Auto Chooser", autoChooser);
 
 
 
@@ -252,7 +243,7 @@ public class RobotContainer {
 
     public void configureDefaultCommands() {
         e_Elevator.setDefaultCommand(elevatorCom);
-        L_leds.setDefaultCommand(LEDCom);
+        //L_leds.setDefaultCommand(LEDCom);
         I_I2C.setDefaultCommand(I2CCom);
         A_AlgaeIntake.setDefaultCommand(algaeIntakeCom);
        

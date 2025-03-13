@@ -27,9 +27,13 @@ public class autoL3 extends InstantCommand {
 
     public autoL3(Elevator elevator) {
         this.elevator = elevator;
+
+
+        addRequirements(elevator);
     }
     @Override
     public void execute() {
-        elevator.autoL3(); // Call the autoL3 function within the command
+    System.out.println("autoL3 IS RUBBING");
+        Elevator.autoL3(); // Call the autoL3 function within the command
     }
 }
