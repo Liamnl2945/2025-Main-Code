@@ -7,6 +7,8 @@ import frc.robot.limelightData;
 import frc.robot.PIDs.AprilTagPointLock;
 import frc.robot.PIDs.AprilTagRotationLock;
 import frc.robot.PIDs.StrafePID;
+import frc.robot.PIDs.StrafePIDLeftLock;
+import frc.robot.PIDs.StrafePIDRightLock;
 import frc.robot.PIDs.SwerveDriveMotorPID;
 import frc.robot.PIDs.SwerveTurnMotorPID;
 import frc.robot.PIDs.TranslationPID;
@@ -35,12 +37,16 @@ public class TeleopSwerve extends Command {
     public static double trapShootDistance = 2; //TODO tune to robot
     public static double trapShooterSpeed = 0.0; //TODO tune to robot
 
-    private final double moveSpeedLimiter = 0.5*(1-(height*0.9));//ex, 0.5 = 50%
+    public static int alignValue = -1;
+
+    private final double moveSpeedLimiter = 0.5*(1-(height*0.9));//limit swerve speed based on elevator height
     private final double rotationSpeedLimiter = 0.5*(0.2*(1-(height * 0.9)));
 
     private AprilTagPointLock rotationPID;
     private TranslationPID translationPID;
     private StrafePID strafePID;
+    private static StrafePIDLeftLock strafePIDLeftLock;
+    private static StrafePIDRightLock strafePIDRightLock;
 
     private StrafePID StrafePIDLock;
     private TranslationPID TranslationPIDLock;
@@ -92,10 +98,27 @@ public class TeleopSwerve extends Command {
 
     @Override
     public void execute() {
+        if(RobotContainer.dpadRight.getAsBoolean()){
+            alignValue = 1;
+        }
+        else if(RobotContainer.dpadLeft.getAsBoolean()){
+            alignValue = -1;
+        }
+
         if(limelightData.TagValid && RobotContainer.heightToggle.getAsBoolean()){//if limelight sees tag and the aiming is pressed
-            rotationVal = rotationPID.getR();
-            translationVal = translationPID.getT();
-            strafeVal = strafePID.getS();
+            rotationVal =  -MathUtil.applyDeadband(rotationSup.getAsDouble(), constants.stickDeadband)*rotationSpeedLimiter;//invert sign if robot is turing the wrong direction. Would normally stick rotation speed limiter in 'drive' method, but it would interfere with PID calculations
+            translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), constants.stickDeadband);
+            switch (alignValue) {
+                case 1:
+                    strafeVal = strafePIDRightLock.getS();
+                    break;
+                case -1:
+                    strafeVal = strafePIDLeftLock.getS();
+                    break;
+            }
+
+
+
         } else {
             isPointLocked = false;
             isRotationLocked = false;

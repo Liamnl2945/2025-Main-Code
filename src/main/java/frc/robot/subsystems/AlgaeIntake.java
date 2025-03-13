@@ -22,15 +22,12 @@ public class AlgaeIntake extends SubsystemBase {
     private static double targetPos = 0;
     private static double maxAlgaeArmRotations = -0.768;
 
-    private static Timer intakeTimer = new Timer();
-     // Update every 50ms
 
 
     public AlgaeIntake(){
         algaeWrist.setNeutralMode(NeutralModeValue.Brake);
         top.setInverted(true);
         bottom.setInverted(true);
-        intakeTimer.start();
     }
 
     public static void RunAlgaeIntake(double speed){

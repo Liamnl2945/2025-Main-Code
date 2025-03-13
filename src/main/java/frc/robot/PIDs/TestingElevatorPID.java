@@ -8,7 +8,7 @@ public class TestingElevatorPID {
         
     public static PIDController elevatorPID = createPIDController();
     private static PIDController createPIDController() {
-        PIDController pid = new PIDController(0.01, 0.001, 0.00015);
+        PIDController pid = new PIDController(0.035  , 0.001, 0.00005);
         pid.setTolerance(0.05); // allowable distance error
         pid.setSetpoint(0);
         return pid;

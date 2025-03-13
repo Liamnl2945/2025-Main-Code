@@ -105,9 +105,12 @@ public class RobotContainer {
     public final static JoystickButton tsSoAlgaeCalibrate = new JoystickButton(manipulator, XboxController.Button.kA.value);
     public final JoystickButton elevatorButton = new JoystickButton(manipulator, translationAxis);
 
-    public final static Trigger dpadNull = new Trigger(() -> manipulator.getPOV() == -1);
+    public static Trigger dpadNull = new Trigger(() -> manipulator.getPOV() == -1);
     public static final Trigger dpadUp = new Trigger(() -> manipulator.getPOV() == 0);
     public static final Trigger dpadDown = new Trigger(() -> manipulator.getPOV() == 180);
+
+    public static final Trigger dpadLeft = new Trigger(() -> driver.getPOV() == 270);
+    public static final Trigger dpadRight = new Trigger(() -> driver.getPOV() == 90);
 
 
 
