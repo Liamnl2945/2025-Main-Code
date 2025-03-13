@@ -21,20 +21,22 @@ public class AlgaeIntake extends SubsystemBase {
     private static TstingAlgaeWristPID pid = new TstingAlgaeWristPID();
     private static double targetPos = 0;
     private static double maxAlgaeArmRotations = -0.768;
-    private static int themove = 0;
 
+    private static Timer intakeTimer = new Timer();
+     // Update every 50ms
 
 
     public AlgaeIntake(){
         algaeWrist.setNeutralMode(NeutralModeValue.Brake);
         top.setInverted(true);
         bottom.setInverted(true);
+        intakeTimer.start();
     }
 
     public static void RunAlgaeIntake(double speed){
-      //  System.out.println(RobotContainer.algaeLimitSwitch.get());
+        //System.out.println(RobotContainer.algaeLimitSwitch.get());
             if(tsSoFweakingStateVariable.equals("Calibrating")) {
-               // System.out.println(tsSoFweakingStateVariable);
+                System.out.println(tsSoFweakingStateVariable);
                 algaeWrist.set(-0.05); // auto-calibrate speed; needs to go until it hits the switch
                 if (RobotContainer.algaeLimitSwitch.get()) {
                     algaeWrist.set(0);
@@ -57,37 +59,19 @@ public class AlgaeIntake extends SubsystemBase {
                 algaeWrist.set(pid.getSpeed(targetPos - algaeWrist.getPosition().getValueAsDouble()));
 
                 if(RobotContainer.tsSoAlgaeCalibrate.getAsBoolean() && !RobotContainer.heightToggle.getAsBoolean()) {
-                    System.out.println("I have brain cancer"); // me too buddy, me too
+                    System.out.println("I have brain cancer");
                     tsSoFweakingStateVariable = "Calibrating";
                 }
 
                 // Intake/Outtake control
                 if(RobotContainer.leftTriggerAxis.getAsBoolean()) {
-                   //top.set(ControlMode.PercentOutput, -1);
-                   //bottom.set(ControlMode.PercentOutput, 1);
-                    themove = 2;
+                   top.set(ControlMode.PercentOutput, -1);
+                   bottom.set(ControlMode.PercentOutput, 1);
                 } else if (RobotContainer.rightTriggerAxis.getAsBoolean()) {
-                    //top.set(ControlMode.PercentOutput, 1);
-                    //bottom.set(ControlMode.PercentOutput, -1);
-                    themove = 1;
-                }
-                if(themove == 1){
-                    top.set(ControlMode.PercentOutput, 0.3);
-                    bottom.set(ControlMode.PercentOutput, -0.3);
-                    if(!RobotContainer.rightTriggerAxis.getAsBoolean()){
-                        themove = 3;
-                    }
-                }else if(themove == 2){
-                    top.set(ControlMode.PercentOutput, -1);
-                    bottom.set(ControlMode.PercentOutput, 1);
-                    if(!RobotContainer.leftTriggerAxis.getAsBoolean()){
-                        themove = 0;
-                    }
-                }else if(themove == 3){
-                    top.set(ControlMode.PercentOutput, 0.25);
-                    bottom.set(ControlMode.PercentOutput, -0.25);
-                }else if(themove == 0){
-                    top.set(ControlMode.PercentOutput, 0);
+                    top.set(ControlMode.PercentOutput, 1);
+                   bottom.set(ControlMode.PercentOutput, -1);
+                } else {
+                   top.set(ControlMode.PercentOutput, 0);
                     bottom.set(ControlMode.PercentOutput, 0);
                 }
             }

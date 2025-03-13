@@ -61,7 +61,7 @@ if(TagValid) {
     }
 }
 else{
-    System.out.println("No Note Seen");
+    //System.out.println("No Note Seen");
 }
     }
 }

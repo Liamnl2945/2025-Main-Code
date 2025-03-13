@@ -11,7 +11,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "auto_L3"
+                  "name": "print hello"
                 }
               }
             ]

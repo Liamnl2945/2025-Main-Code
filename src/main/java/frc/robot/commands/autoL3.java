@@ -18,10 +18,11 @@ public class autoL3 extends Command {
 */
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Elevator;
 
-public class autoL3 extends InstantCommand {
+public class autoL3 extends Command {
 
     private final Elevator elevator;
 
@@ -34,6 +35,6 @@ public class autoL3 extends InstantCommand {
     @Override
     public void execute() {
     System.out.println("autoL3 IS RUBBING");
-        Elevator.autoL3(); // Call the autoL3 function within the command
+        elevator.autoL3(); // Call the autoL3 function within the command
     }
 }

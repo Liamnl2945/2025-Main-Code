@@ -14,15 +14,15 @@ import frc.robot.constants;
 public class LEDSubsystem extends SubsystemBase{//NOTE the CANdle has 8 built in LEDs, so any external LED's will be starting on index "8" since the Candle already uses 0-7.
 
     // Create a rainbow animation
-    private static final Animation rainbowAnimation = new RainbowAnimation(1, 1, 60);
-    private static final Animation larsonAnimation = new LarsonAnimation(255, 255, 255, 3, 1, /*TODO SET*/3, BounceMode.Front, 3, 1);
+    //private static final Animation rainbowAnimation = new RainbowAnimation(1, 1, 60);
+    //private static final Animation larsonAnimation = new LarsonAnimation(255, 255, 255, 3, 1, /*TODO SET*/3, BounceMode.Front, 3, 1);
     private static final Elevator elevator = new Elevator();
 
     
     public LEDSubsystem() {
-        CANdle candle = new CANdle(constants.CANdle.CANdle);
-        FireAnimation fireAnimation = new FireAnimation();
-        candle.animate(fireAnimation);
+    //    CANdle candle = new CANdle(constants.CANdle.CANdle);
+      //  FireAnimation fireAnimation = new FireAnimation();
+        //candle.animate(fireAnimation);
     }
 
 //    public void animate(){

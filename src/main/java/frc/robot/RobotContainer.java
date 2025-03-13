@@ -172,16 +172,17 @@ public class RobotContainer {
 
         //Auto Command Builder
         Command autoL3 = new autoL3(e_Elevator);
-        Command autoL3Time = autoL3.withTimeout(1.5);
+        Command autoL3Time = autoL3.withTimeout(2);
         Command autoIntake = new autoIntakeCommand(e_Elevator);
         Command autoIntakeTime = autoIntake.withTimeout(.025);
 
         //Register named commands here
+        NamedCommands.registerCommand("print hello", Commands.print("hello"));
         //ie. NamedCommands.registerCommand("autoBalance", swerve.autoBalanceCommand());
-        //com.pathplanner.lib.auto.NamedCommands.registerCommand("auto L3", autoL3Time);
+        com.pathplanner.lib.auto.NamedCommands.registerCommand("auto_L3", autoL3Time);
         //com.pathplanner.lib.auto.NamedCommands.registerCommand("auto L3",H autoL3Time);
         com.pathplanner.lib.auto.NamedCommands.registerCommand("auto Intake", autoIntakeTime);
-        NamedCommands.registerCommand("auto_L3", autoL3Time);
+        //NamedCommands.registerCommand("auto_L3", autoL3Time);
         NamedCommands.registerCommand("L3 print", Commands.print("L3 elevator"));
 
 

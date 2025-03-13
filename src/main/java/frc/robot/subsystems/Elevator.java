@@ -44,7 +44,7 @@ public class Elevator extends SubsystemBase {
 
         public static void runElevator(double speed, int stickButton){
             height = elevatorMotor.getPosition().getValueAsDouble() / 165;
-          //  System.out.println(elevatorMotor.getPosition().getValueAsDouble());
+            //System.out.println(elevatorMotor.getPosition().getValueAsDouble());
 
             if(RobotContainer.heightToggle.getAsBoolean()) {
                 if(RobotContainer.L1.getAsBoolean()){//FOR ALL VALUES OF SELECTED, they are target rotations for the PID. For example, if L1 sets selected to 10, then it will raise the arm 10 motor rotations high.
@@ -158,14 +158,14 @@ public class Elevator extends SubsystemBase {
 
         }
         public static void autoL3(){
-            //System.out.println("AUTO L3");
+            System.out.println("AUTO L3");
 
             while (!RobotContainer.elevatorLimitSwitch.get()) {
                 selected = -2;
             }
 
             selected = l3Height;
-           // System.out.println(selected);
+            System.out.println(selected);
             if(elevatorMotor.getPosition().getValueAsDouble() <= l3Height + 5){
                 intook = 5;
                 selected = 0;
@@ -174,14 +174,14 @@ public class Elevator extends SubsystemBase {
         }
 
         public static void autoL4(){
-         //   System.out.println("AUTO L4");
+            System.out.println("AUTO L4");
 
             while (!RobotContainer.elevatorLimitSwitch.get()) {
                 selected = -2;
             }
 
             selected = l4Height;
-            //System.out.println(selected);
+            System.out.println(selected);
             if(elevatorMotor.getPosition().getValueAsDouble() <= l4Height + 5){
                 intook = 5;
                 selected = 0;
