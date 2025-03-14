@@ -56,15 +56,12 @@ public class limelightData {
         snakeXOffset = SnakeTable.getEntry("tx").getDouble(0.0);//Gets basic offset of the detected tag from network tables. This is the main source for calculating error values for pointlock PID's for the april tag aim lock
         algaeXOffset = algaeTable.getEntry("tx").getDouble(0.0);
        // System.out.println(noteValid + " " + snakeXOffset);
-if(TagValid) {
     if ((TeleopSwerve.alignValue == 1) && (limelightData.TagAlgaeValid)) {
-        System.out.println("Aligned Right" + " Note Valid: " + TagValid + " ID: " + algaeTagID + " Offset: " + algaeXOffset);
+        System.out.println("Aligned Right" + " \n" + " Note Valid: " + TagValid + " ID: " + algaeTagID + " Offset: " + algaeXOffset);
     } else if ((TeleopSwerve.alignValue == -1) && (limelightData.TagSnakeValid)){
-        System.out.println("Aligned Left" + " Note Valid: " + TagValid + " ID: " + snakeTagID + " Offset: " + snakeXOffset);
-    }
-}
-else{
-    //System.out.println("No Note Seen");
+        System.out.println("Aligned Left" + " \n" +  " Note Valid: " + TagValid + " ID: " + snakeTagID + " Offset: " + snakeXOffset);
+    } else{
+    //System.out.println(TeleopSwerve.alignValue);
 }
     }
 }

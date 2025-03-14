@@ -93,6 +93,7 @@ public class RobotContainer {
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kX.value);
     public final static JoystickButton slowMove = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    public static final Trigger swerveOverride = new Trigger(() -> driver.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1);
 
 
     //manip
@@ -103,7 +104,6 @@ public class RobotContainer {
     public final static JoystickButton L3 = new JoystickButton(manipulator, XboxController.Button.kB.value);
     public final static JoystickButton L4 = new JoystickButton(manipulator, XboxController.Button.kY.value);
     public final static JoystickButton tsSoAlgaeCalibrate = new JoystickButton(manipulator, XboxController.Button.kA.value);
-    public final JoystickButton elevatorButton = new JoystickButton(manipulator, translationAxis);
 
     public static Trigger dpadNull = new Trigger(() -> manipulator.getPOV() == -1);
     public static final Trigger dpadUp = new Trigger(() -> manipulator.getPOV() == 0);

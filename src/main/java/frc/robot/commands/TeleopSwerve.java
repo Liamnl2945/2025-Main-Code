@@ -105,7 +105,7 @@ public class TeleopSwerve extends Command {
             alignValue = -1;
         }
 
-        if(limelightData.TagValid && RobotContainer.heightToggle.getAsBoolean()){//if limelight sees tag and the aiming is pressed
+        if(limelightData.TagValid && RobotContainer.heightToggle.getAsBoolean() && !RobotContainer.swerveOverride.getAsBoolean()){//if limelight sees tag and the aiming is pressed
             rotationVal =  -MathUtil.applyDeadband(rotationSup.getAsDouble(), constants.stickDeadband)*rotationSpeedLimiter;//invert sign if robot is turing the wrong direction. Would normally stick rotation speed limiter in 'drive' method, but it would interfere with PID calculations
             translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), constants.stickDeadband);
             switch (alignValue) {
