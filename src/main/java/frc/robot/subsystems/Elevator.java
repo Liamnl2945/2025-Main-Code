@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants;
 
 public class Elevator extends SubsystemBase {
-    static double selected = -1;
+    public static double selected = -1;
     public static double height = 0;
     public static int intook = 0;
     public static double l1Height = -34;
@@ -31,7 +31,7 @@ public class Elevator extends SubsystemBase {
     private static TestingElevatorPIDPID pidForDaPid = new TestingElevatorPIDPID();
     private static int counter = 0;
 
-    private final static TalonFX elevatorMotor = new TalonFX(constants.Elevator.elevator, "rio");
+    public final static TalonFX elevatorMotor = new TalonFX(constants.Elevator.elevator, "rio");
     private final static TalonFX indexerMotor = new TalonFX(constants.Elevator.indexer, "rio");
 
         public Elevator(){

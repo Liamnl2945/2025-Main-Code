@@ -93,7 +93,8 @@ public class RobotContainer {
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kX.value);
     public final static JoystickButton slowMove = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-    public static final Trigger swerveOverride = new Trigger(() -> driver.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1);
+    public static final Trigger swerveOverride = new Trigger(() -> driver.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.1);
+    public static final Trigger swerveAlign = new Trigger(() -> driver.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1);
 
 
     //manip

@@ -1,8 +1,10 @@
 package frc.robot.PIDs;
 
 import edu.wpi.first.math.controller.PIDController;
+import frc.robot.RobotContainer;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.limelightData;
+import frc.robot.subsystems.Elevator;
 
 public class TestingElevatorPID {
         
@@ -15,7 +17,6 @@ public class TestingElevatorPID {
     }
 
     public double getSpeed(double error) {
-
         double rawOutput = elevatorPID.calculate(error);
         double maxOutput = 1; // Example maximum absolute value of the PID output
         System.out.println("PID USED WITH ERROR: " + error + " AND OUTPUT: " + -(rawOutput/maxOutput));

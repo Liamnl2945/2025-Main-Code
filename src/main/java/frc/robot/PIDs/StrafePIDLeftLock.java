@@ -2,6 +2,7 @@ package frc.robot.PIDs;
 
 import edu.wpi.first.math.controller.PIDController;
 import frc.robot.limelightData;
+import frc.robot.subsystems.Elevator;
 
 import java.util.LinkedList;
 
@@ -33,9 +34,20 @@ public class StrafePIDLeftLock {
 
 
     public double getS() {
-        double calculatedValue = strafePID.calculate(limelightData.snakeXOffset);
-        System.out.println(calculatedValue);
-        return calculatedValue;
+        if(Elevator.selected == Elevator.l4Height){
+            double calculatedValue = strafePID.calculate(limelightData.snakeXOffset -1);
+            System.out.println(calculatedValue);
+            return calculatedValue;
+        }
+        else{
+            double calculatedValue = strafePID.calculate(limelightData.snakeXOffset);
+            System.out.println(calculatedValue);
+            return calculatedValue;
+        }
+
+
+
+
     }
 
 }
