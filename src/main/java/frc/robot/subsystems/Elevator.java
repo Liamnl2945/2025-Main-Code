@@ -44,7 +44,7 @@ public class Elevator extends SubsystemBase {
 
         public static void runElevator(double speed, int stickButton){
             height = elevatorMotor.getPosition().getValueAsDouble() / 165;
-            System.out.println(elevatorMotor.getPosition().getValueAsDouble());
+            //System.out.println(elevatorMotor.getPosition().getValueAsDouble());
 
             if(RobotContainer.heightToggle.getAsBoolean()) {
                 if(RobotContainer.L1.getAsBoolean()){//FOR ALL VALUES OF SELECTED, they are target rotations for the PID. For example, if L1 sets selected to 10, then it will raise the arm 10 motor rotations high.

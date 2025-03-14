@@ -37,7 +37,7 @@ public class TeleopSwerve extends Command {
     public static double trapShootDistance = 2; //TODO tune to robot
     public static double trapShooterSpeed = 0.0; //TODO tune to robot
 
-    public static int alignValue = -1;
+    public static int alignValue = 1;
 
     private final double moveSpeedLimiter = 0.6*(1-(height*0.9));//limit swerve speed based on elevator height
     private final double rotationSpeedLimiter = 0.5*(0.2*(1-(height * 0.9)));
@@ -110,16 +110,18 @@ public class TeleopSwerve extends Command {
             translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), constants.stickDeadband);
             switch (alignValue) {
                 case 1:
-                    if(limelightData.TagSnakeValid) {
+                    if(limelightData.TagAlgaeValid) {
                         strafeVal = strafePIDRightLock.getS();
+                        //System.out.println("PID USED MF");
                     }
                     else {
                         strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), constants.stickDeadband);
                     }
                     break;
                 case -1:
-                    if(limelightData.TagAlgaeValid) {
+                    if(limelightData.TagSnakeValid) {
                         strafeVal = strafePIDLeftLock.getS();
+                        //System.out.println("PID USED MF");
                     } else {
                         strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), constants.stickDeadband);
                     }

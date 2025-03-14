@@ -57,10 +57,10 @@ public class limelightData {
         algaeXOffset = algaeTable.getEntry("tx").getDouble(0.0);
        // System.out.println(noteValid + " " + snakeXOffset);
 if(TagValid) {
-    if (TeleopSwerve.alignValue == 1) {
-       // System.out.println("Aligned Right" + " Note Valid: " + TagValid + " ID: " + algaeTagID + " Offset: " + algaeXOffset);
-    } else if (TeleopSwerve.alignValue == -1) {
-       // System.out.println("Aligned Left" + " Note Valid: " + TagValid + " ID: " + snakeTagID + " Offset: " + snakeXOffset);
+    if ((TeleopSwerve.alignValue == 1) && (limelightData.TagAlgaeValid)) {
+        System.out.println("Aligned Right" + " Note Valid: " + TagValid + " ID: " + algaeTagID + " Offset: " + algaeXOffset);
+    } else if ((TeleopSwerve.alignValue == -1) && (limelightData.TagSnakeValid)){
+        System.out.println("Aligned Left" + " Note Valid: " + TagValid + " ID: " + snakeTagID + " Offset: " + snakeXOffset);
     }
 }
 else{
