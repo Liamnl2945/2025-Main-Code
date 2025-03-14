@@ -1,5 +1,8 @@
 package frc.robot.commands;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import frc.robot.subsystems.Elevator;
 import frc.robot.RobotContainer;
 import frc.robot.constants;
@@ -67,6 +70,14 @@ public class TeleopSwerve extends Command {
     private double gyroValue;
     private double setpoint;
 
+    private boolean flag = false;
+
+    private Rotation2d rotationHold;
+
+
+    private Pose2d poseHold;
+    private SwerveModulePosition[] swerveHold;
+
     public double calculateError(double setPointf, double currentPoint){
         return ((setPointf - currentPoint)%360);
     }
@@ -108,11 +119,18 @@ public class TeleopSwerve extends Command {
         if(limelightData.TagValid && RobotContainer.heightToggle.getAsBoolean() && !RobotContainer.swerveOverride.getAsBoolean()){//if limelight sees tag and the aiming is pressed
             rotationVal =  -MathUtil.applyDeadband(rotationSup.getAsDouble(), constants.stickDeadband)*rotationSpeedLimiter;//invert sign if robot is turing the wrong direction. Would normally stick rotation speed limiter in 'drive' method, but it would interfere with PID calculations
             translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), constants.stickDeadband);
+            if(!flag){
+                flag = true;
+                rotationHold = s_Swerve.getHeading();
+                s_Swerve.setHeading(new Rotation2d(0));
+            }
+
+
+
             switch (alignValue) {
                 case 1:
                     if(limelightData.TagAlgaeValid) {
                         strafeVal = strafePIDRightLock.getS();
-                        //System.out.println("PID USED MF");
                     }
                     else {
                         strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), constants.stickDeadband);
@@ -121,7 +139,6 @@ public class TeleopSwerve extends Command {
                 case -1:
                     if(limelightData.TagSnakeValid) {
                         strafeVal = strafePIDLeftLock.getS();
-                        //System.out.println("PID USED MF");
                     } else {
                         strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), constants.stickDeadband);
                     }
@@ -130,6 +147,11 @@ public class TeleopSwerve extends Command {
 
 
         } else {
+            if(flag){
+                flag = false;
+                s_Swerve.setHeading(rotationHold);
+            }
+
             isPointLocked = false;
             isRotationLocked = false;
             isTrapLocked = false;

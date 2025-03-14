@@ -27,6 +27,8 @@ public class limelightData {
         public static boolean TagAlgaeValid;
         public static double distance2d;
         public static boolean noteValid;
+        public static double snakeTagArea;
+        public static double algaeTagArea;
 
         public static boolean contains(int[] arr, double index){//coding bat ahh function
             for(int i = 0; i < arr.length; i++){
@@ -55,13 +57,18 @@ public class limelightData {
 
         snakeXOffset = SnakeTable.getEntry("tx").getDouble(0.0);//Gets basic offset of the detected tag from network tables. This is the main source for calculating error values for pointlock PID's for the april tag aim lock
         algaeXOffset = algaeTable.getEntry("tx").getDouble(0.0);
+
+        snakeTagArea = SnakeTable.getEntry("ta").getDouble(0.0);//Gets basic offset of the detected tag from network tables. This is the main source for calculating error values for pointlock PID's for the april tag aim lock
+        algaeTagArea = algaeTable.getEntry("ta").getDouble(0.0);
+
+
        // System.out.println(noteValid + " " + snakeXOffset);
     if ((TeleopSwerve.alignValue == 1) && (limelightData.TagAlgaeValid)) {
         System.out.println("Aligned Right" + " \n" + " Note Valid: " + TagValid + " ID: " + algaeTagID + " Offset: " + algaeXOffset);
     } else if ((TeleopSwerve.alignValue == -1) && (limelightData.TagSnakeValid)){
         System.out.println("Aligned Left" + " \n" +  " Note Valid: " + TagValid + " ID: " + snakeTagID + " Offset: " + snakeXOffset);
     } else{
-    //System.out.println(TeleopSwerve.alignValue);
+    System.out.println(TeleopSwerve.alignValue);
 }
     }
 }

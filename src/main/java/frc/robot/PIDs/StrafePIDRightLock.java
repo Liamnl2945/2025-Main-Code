@@ -18,7 +18,7 @@ public class StrafePIDRightLock {
         PIDController pid = new PIDController(0.02, 0.00, 0.0003);
         pid.setTolerance(0); // allowable angle error
         pid.enableContinuousInput(0, 360); // it is faster to go 1 degree from 359 to 0 instead of 359 degrees
-        pid.setSetpoint(0); // 0 = apriltag angle/offset
+        pid.setSetpoint(16.68); // 0 = apriltag angle/offset
         return pid;
     }
 
