@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import frc.robot.commands.TeleopSwerve;
 
 import java.util.Arrays;
 
@@ -14,6 +15,8 @@ public class limelightData {
         public static double TagYC;
         public static double TagZC;
         public static double TagYaw;
+        public static double snakeTagID;
+        public static double algaeTagID;
         public static double tagID;
         public static double snakeXOffset;
         public static double algaeXOffset;
@@ -22,15 +25,23 @@ public class limelightData {
         public static boolean TagValid;
         public static double distance2d;
         public static boolean noteValid;
-        
+
+        public static boolean contains(int[] arr, double index){//coding bat ahh function
+            for(int i = 0; i < arr.length; i++){
+                if(arr[i] == index){
+                    return true;
+                }
+            }
+            return false;
+        }
+
     public void calculate() {
-        
 
-        double[] targetPose = SnakeTable.getEntry("targetpose_cameraspace").getDoubleArray(new double[6]);
+        snakeTagID = SnakeTable.getEntry("tid").getDouble(0.0);
+        algaeTagID = algaeTable.getEntry("tid").getDouble(0.0);
 
-        tagID = SnakeTable.getEntry("tid").getDouble(0.0);
-        int[] validtags = {6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21, 22};//Sets bool true/false based on whether a tag that is cared about is detected
-        if(Arrays.asList(validtags).contains(tagID)){//todo might not work
+        int[] validTags = {6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21, 22};//Sets bool true/false based on whether a tag that is cared about is detected
+        if(contains(validTags, snakeTagID) || contains(validTags, algaeTagID)){
             TagValid = true;
         }
         else{
@@ -38,18 +49,19 @@ public class limelightData {
         }
 
         //Pulls from tdclass network table variable, setting it to true if it matches the tag. This name is pulled from the file uploaded to teh limelight, not locally. To change the tag, chang ethe uploaded .txt file
-        noteValid = algaeTable.getEntry("tdclass").getString("nerd").equals("note");
-
 
         snakeXOffset = SnakeTable.getEntry("tx").getDouble(0.0);//Gets basic offset of the detected tag from network tables. This is the main source for calculating error values for pointlock PID's for the april tag aim lock
         algaeXOffset = algaeTable.getEntry("tx").getDouble(0.0);
        // System.out.println(noteValid + " " + snakeXOffset);
-
-        TagYOffset = SnakeTable.getEntry("ty").getDouble(0.0);
-        TagArea = SnakeTable.getEntry("ta").getDouble(0.0);
-        TagXC = targetPose[0];
-        TagYC = targetPose[1];
-        TagZC = targetPose[2];
-        TagYaw = targetPose[5];
+if(TagValid) {
+    if (TeleopSwerve.alignValue == 1) {
+        System.out.println("Aligned Right" + " Note Valid: " + TagValid + " ID: " + algaeTagID + " Offset: " + algaeXOffset);
+    } else if (TeleopSwerve.alignValue == -1) {
+        System.out.println("Aligned Left" + " Note Valid: " + TagValid + " ID: " + snakeTagID + " Offset: " + snakeXOffset);
+    }
+}
+else{
+    System.out.println("No Note Seen");
+}
     }
 }

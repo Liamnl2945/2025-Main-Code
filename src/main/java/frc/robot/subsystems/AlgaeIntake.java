@@ -32,9 +32,9 @@ public class AlgaeIntake extends SubsystemBase {
     }
 
     public static void RunAlgaeIntake(double speed){
-        System.out.println(RobotContainer.algaeLimitSwitch.get());
+      //  System.out.println(RobotContainer.algaeLimitSwitch.get());
             if(tsSoFweakingStateVariable.equals("Calibrating")) {
-                System.out.println(tsSoFweakingStateVariable);
+               // System.out.println(tsSoFweakingStateVariable);
                 algaeWrist.set(-0.05); // auto-calibrate speed; needs to go until it hits the switch
                 if (RobotContainer.algaeLimitSwitch.get()) {
                     algaeWrist.set(0);
