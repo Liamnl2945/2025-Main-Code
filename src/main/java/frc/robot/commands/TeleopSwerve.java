@@ -39,14 +39,14 @@ public class TeleopSwerve extends Command {
 
     public static int alignValue = -1;
 
-    private final double moveSpeedLimiter = 0.5*(1-(height*0.9));//limit swerve speed based on elevator height
+    private final double moveSpeedLimiter = 0.6*(1-(height*0.9));//limit swerve speed based on elevator height
     private final double rotationSpeedLimiter = 0.5*(0.2*(1-(height * 0.9)));
 
     private AprilTagPointLock rotationPID;
     private TranslationPID translationPID;
     private StrafePID strafePID;
-    private static StrafePIDLeftLock strafePIDLeftLock;
-    private static StrafePIDRightLock strafePIDRightLock;
+    private static StrafePIDLeftLock strafePIDLeftLock = new StrafePIDLeftLock();
+    private static StrafePIDRightLock strafePIDRightLock = new StrafePIDRightLock();
 
     private StrafePID StrafePIDLock;
     private TranslationPID TranslationPIDLock;
@@ -110,13 +110,21 @@ public class TeleopSwerve extends Command {
             translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), constants.stickDeadband);
             switch (alignValue) {
                 case 1:
-                    strafeVal = strafePIDRightLock.getS();
+                    if(limelightData.TagSnakeValid) {
+                        strafeVal = strafePIDRightLock.getS();
+                    }
+                    else {
+                        strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), constants.stickDeadband);
+                    }
                     break;
                 case -1:
-                    strafeVal = strafePIDLeftLock.getS();
+                    if(limelightData.TagAlgaeValid) {
+                        strafeVal = strafePIDLeftLock.getS();
+                    } else {
+                        strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), constants.stickDeadband);
+                    }
                     break;
             }
-
 
 
         } else {
@@ -127,6 +135,7 @@ public class TeleopSwerve extends Command {
             translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), constants.stickDeadband);
             strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), constants.stickDeadband);
         }
+
 
         // Drive
         s_Swerve.drive(

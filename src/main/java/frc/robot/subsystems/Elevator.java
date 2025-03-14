@@ -23,8 +23,8 @@ public class Elevator extends SubsystemBase {
     public static double height = 0;
     public static int intook = 0;
     public static double l1Height = -34;
-    public static double l2Height = -70;
-    public static double l3Height = -105;
+    public static double l2Height = -65.5;
+    public static double l3Height = -102;
     public static double l4Height = -146;
     private static I2CBruh colorSensor = new I2CBruh();
     private static TestingElevatorPID pid = new TestingElevatorPID();
@@ -44,7 +44,7 @@ public class Elevator extends SubsystemBase {
 
         public static void runElevator(double speed, int stickButton){
             height = elevatorMotor.getPosition().getValueAsDouble() / 165;
-            //System.out.println(elevatorMotor.getPosition().getValueAsDouble());
+            System.out.println(elevatorMotor.getPosition().getValueAsDouble());
 
             if(RobotContainer.heightToggle.getAsBoolean()) {
                 if(RobotContainer.L1.getAsBoolean()){//FOR ALL VALUES OF SELECTED, they are target rotations for the PID. For example, if L1 sets selected to 10, then it will raise the arm 10 motor rotations high.
@@ -141,11 +141,12 @@ public class Elevator extends SubsystemBase {
             else if(intook == 5){
                 if(elevatorMotor.getPosition().getValueAsDouble() < 130){
                     counter++;
-                    indexerMotor.set(0.4);
+                    indexerMotor.set(0.24);
                 }
                 else {
                     counter++;
-                    indexerMotor.set(0.25);
+                    indexerMotor.set(0.2
+                    );
                 }
                 if(counter > 25){
                     indexerMotor.set(0);

@@ -34,7 +34,7 @@ public class StrafePIDRightLock {
 
 
     public double getS() {
-        double calculatedValue = strafePID.calculate(getFilteredError(-limelightData.algaeXOffset));
+        double calculatedValue = strafePID.calculate(-limelightData.algaeXOffset);
         System.out.println(calculatedValue);
         return calculatedValue;
     }

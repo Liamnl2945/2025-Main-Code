@@ -23,6 +23,8 @@ public class limelightData {
         public static double TagYOffset;
         public static double TagArea;
         public static boolean TagValid;
+        public static boolean TagSnakeValid;
+        public static boolean TagAlgaeValid;
         public static double distance2d;
         public static boolean noteValid;
 
@@ -47,7 +49,8 @@ public class limelightData {
         else{
             TagValid = false; ;
         }
-
+        TagSnakeValid = contains(validTags, snakeTagID);
+        TagAlgaeValid = contains(validTags, algaeTagID);
         //Pulls from tdclass network table variable, setting it to true if it matches the tag. This name is pulled from the file uploaded to teh limelight, not locally. To change the tag, chang ethe uploaded .txt file
 
         snakeXOffset = SnakeTable.getEntry("tx").getDouble(0.0);//Gets basic offset of the detected tag from network tables. This is the main source for calculating error values for pointlock PID's for the april tag aim lock
@@ -55,9 +58,9 @@ public class limelightData {
        // System.out.println(noteValid + " " + snakeXOffset);
 if(TagValid) {
     if (TeleopSwerve.alignValue == 1) {
-        System.out.println("Aligned Right" + " Note Valid: " + TagValid + " ID: " + algaeTagID + " Offset: " + algaeXOffset);
+       // System.out.println("Aligned Right" + " Note Valid: " + TagValid + " ID: " + algaeTagID + " Offset: " + algaeXOffset);
     } else if (TeleopSwerve.alignValue == -1) {
-        System.out.println("Aligned Left" + " Note Valid: " + TagValid + " ID: " + snakeTagID + " Offset: " + snakeXOffset);
+       // System.out.println("Aligned Left" + " Note Valid: " + TagValid + " ID: " + snakeTagID + " Offset: " + snakeXOffset);
     }
 }
 else{
