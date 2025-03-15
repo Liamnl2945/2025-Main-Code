@@ -23,7 +23,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 1.5
+                  "waitTime": 1.0
                 }
               },
               {
@@ -42,7 +42,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 1.0
+                  "waitTime": 2.0
                 }
               },
               {
@@ -55,21 +55,28 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "intake_Down"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "Blue bot side to human player"
           }
         },
         {
-          "type": "named",
+          "type": "deadline",
           "data": {
-            "name": "Intake_PickUp"
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 2.0
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake_PickUp"
+                }
+              }
+            ]
           }
         },
         {

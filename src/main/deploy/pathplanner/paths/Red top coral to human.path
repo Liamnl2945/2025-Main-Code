@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 13.498715093876234,
-        "y": 5.763613324298258
+        "x": 12.107581967213115,
+        "y": 7.279661885245901
       },
       "isLocked": false,
       "linkedName": null
@@ -56,7 +56,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 52.8152935467671
+    "rotation": -127.45057823173661
   },
   "reversed": false,
   "folder": "Red Paths",

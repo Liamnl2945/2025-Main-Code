@@ -209,14 +209,22 @@ public class Elevator extends SubsystemBase {
         }
 
         public static void intakeDown(){
-            selected = -2;
-            intook = 0;
+
+            System.out.println("INTAKE DOWN");
+            selected = 0;
+
+            intook = 1;
+            indexerMotor.set(0);
             elevatorMotor.set(pid.getSpeed(selected - elevatorMotor.getPosition().getValueAsDouble()));
+
             autoflag = false;
+
+
         }
 
         public static void autoPickUp() {
             System.out.println("AUTO PICKUP");
+
 
             if (intook == 1) {
                 indexerMotor.set(0.15);
