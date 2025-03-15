@@ -3,18 +3,11 @@ package frc.robot.commands;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import frc.robot.PIDs.*;
 import frc.robot.subsystems.Elevator;
 import frc.robot.RobotContainer;
 import frc.robot.constants;
 import frc.robot.limelightData;
-import frc.robot.PIDs.AprilTagPointLock;
-import frc.robot.PIDs.AprilTagRotationLock;
-import frc.robot.PIDs.StrafePID;
-import frc.robot.PIDs.StrafePIDLeftLock;
-import frc.robot.PIDs.StrafePIDRightLock;
-import frc.robot.PIDs.SwerveDriveMotorPID;
-import frc.robot.PIDs.SwerveTurnMotorPID;
-import frc.robot.PIDs.TranslationPID;
 import frc.robot.subsystems.Swerve;
 
 import java.util.function.BooleanSupplier;
@@ -50,6 +43,7 @@ public class TeleopSwerve extends Command {
     private StrafePID strafePID;
     private static StrafePIDLeftLock strafePIDLeftLock = new StrafePIDLeftLock();
     private static StrafePIDRightLock strafePIDRightLock = new StrafePIDRightLock();
+    private static StrafePIDMiddleLock strafePIDMiddleLock = new StrafePIDMiddleLock();
 
     private StrafePID StrafePIDLock;
     private TranslationPID TranslationPIDLock;
@@ -109,11 +103,14 @@ public class TeleopSwerve extends Command {
 
     @Override
     public void execute() {
-        if(RobotContainer.dpadRight.getAsBoolean()){
+        if(RobotContainer.dpadRightDriver.getAsBoolean()){
             alignValue = 1;
         }
-        else if(RobotContainer.dpadLeft.getAsBoolean()){
+        else if(RobotContainer.dpadLeftDriver.getAsBoolean()){
             alignValue = -1;
+        }
+        else if(RobotContainer.dpadUpDriver.getAsBoolean()){
+            alignValue = 0;
         }
 
         if(limelightData.TagValid && RobotContainer.swerveAlign.getAsBoolean() && !RobotContainer.swerveOverride.getAsBoolean()){//if limelight sees tag and the aiming is pressed
@@ -139,6 +136,13 @@ public class TeleopSwerve extends Command {
                 case -1:
                     if(limelightData.TagSnakeValid) {
                         strafeVal = strafePIDLeftLock.getS();
+                    } else {
+                        strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), constants.stickDeadband);
+                    }
+                    break;
+                case 0:
+                    if(limelightData.TagAlgaeValid) {
+                        strafeVal = strafePIDMiddleLock.getS();
                     } else {
                         strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), constants.stickDeadband);
                     }

@@ -111,8 +111,9 @@ public class RobotContainer {
     public static final Trigger dpadUp = new Trigger(() -> manipulator.getPOV() == 0);
     public static final Trigger dpadDown = new Trigger(() -> manipulator.getPOV() == 180);
 
-    public static final Trigger dpadLeft = new Trigger(() -> driver.getPOV() == 270);
-    public static final Trigger dpadRight = new Trigger(() -> driver.getPOV() == 90);
+    public static final Trigger dpadLeftDriver = new Trigger(() -> driver.getPOV() == 270);
+    public static final Trigger dpadRightDriver = new Trigger(() -> driver.getPOV() == 90);
+    public static final Trigger dpadUpDriver = new Trigger(() -> driver.getPOV() == 0);
 
 
 

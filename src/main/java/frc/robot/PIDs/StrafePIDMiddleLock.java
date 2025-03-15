@@ -1,5 +1,3 @@
-
-
 package frc.robot.PIDs;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -8,7 +6,7 @@ import frc.robot.subsystems.Elevator;
 
 import java.util.LinkedList;
 
-public class StrafePIDRightLock {
+public class StrafePIDMiddleLock {
 
     public static PIDController strafePID = createPIDController();
 
@@ -19,7 +17,8 @@ public class StrafePIDRightLock {
         PIDController pid = new PIDController(0.02, 0.00, 0.0003);
         pid.setTolerance(0); // allowable angle error
         pid.enableContinuousInput(0, 360); // it is faster to go 1 degree from 359 to 0 instead of 359 degrees
-        pid.setSetpoint(16.68); // 0 = apriltag angle/offset
+        //TODO TUNE THIS LOSER
+        pid.setSetpoint(-4.02); // 0 = apriltag angle/offset
         return pid;
     }
 
@@ -36,15 +35,19 @@ public class StrafePIDRightLock {
 
     public double getS() {
         if(Elevator.selected == Elevator.l4Height){
-            double calculatedValue = strafePID.calculate(limelightData.algaeXOffset-1);
+            double calculatedValue = strafePID.calculate(limelightData.snakeXOffset-1);
             System.out.println(calculatedValue);
             return calculatedValue;
         }
         else{
-            double calculatedValue = strafePID.calculate(limelightData.algaeXOffset);
+            double calculatedValue = strafePID.calculate(limelightData.snakeXOffset);
             System.out.println(calculatedValue);
             return calculatedValue;
         }
+
+
+
+
     }
 
 }
