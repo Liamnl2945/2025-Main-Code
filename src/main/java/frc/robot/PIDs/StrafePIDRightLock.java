@@ -38,7 +38,6 @@ public class StrafePIDRightLock {
 
 
 
-
         if(Elevator.selected == Elevator.l4Height){
             double calculatedValue = strafePID.calculate(limelightData.algaeXOffset-1);
             System.out.println(calculatedValue);
