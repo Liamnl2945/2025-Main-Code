@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.*;
@@ -176,17 +177,29 @@ public class RobotContainer {
         Command autoL3Time = autoL3.withTimeout(2);
         Command autoIntake = new autoIntakeCommand(e_Elevator);
         Command autoIntakeTime = autoIntake.withTimeout(.025);
+        Command autoIntakeShoot = new intakeAutoShootCommand(e_Elevator);
+        Command autoIntakeShootTime = autoIntakeShoot.withTimeout(0.5);
+        Command autoIntakeDown = new autoIntakeDownCommand(e_Elevator);
+        Command autoIntakeCommand = new autoIntakeCommand(e_Elevator);
+        Command autoIntakePickUp = new autoPickUpCommand(e_Elevator);
+        Command sec5Wait = new WaitCommand(2);
+
+
 
         //Register named commands here
         NamedCommands.registerCommand("print hello", Commands.print("hello"));
-        //ie. NamedCommands.registerCommand("autoBalance", swerve.autoBalanceCommand());
+        NamedCommands.registerCommand("5 Second wait", sec5Wait);
+
         com.pathplanner.lib.auto.NamedCommands.registerCommand("auto_L3", autoL3Time);
-        //com.pathplanner.lib.auto.NamedCommands.registerCommand("auto L3",H autoL3Time);
+
         com.pathplanner.lib.auto.NamedCommands.registerCommand("auto Intake", autoIntakeTime);
-        //NamedCommands.registerCommand("auto_L3", autoL3Time);
+
+
         NamedCommands.registerCommand("L3 print", Commands.print("L3 elevator"));
-
-
+        NamedCommands.registerCommand("intake_Out", autoIntakeShoot);
+        NamedCommands.registerCommand("intake_Down", autoIntakeDown);
+        NamedCommands.registerCommand("Intake in", autoIntakeCommand);
+        NamedCommands.registerCommand("Intake_PickUp", autoIntakePickUp);
 
         //ie. new EventTrigger("run intake").whileTrue(Commands.print("running intake"));
 

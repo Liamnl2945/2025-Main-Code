@@ -32,9 +32,14 @@ public class autoL3 extends Command {
 
         addRequirements(elevator);
     }
+
+    @Override
+    public void initialize() {
+        Elevator.elevatorMotor.setPosition(0);
+    }
     @Override
     public void execute() {
-    System.out.println("autoL3 IS RUBBING");
+    //System.out.println("autoL3 IS RUBBING");
         elevator.autoL3(); // Call the autoL3 function within the command
     }
 }

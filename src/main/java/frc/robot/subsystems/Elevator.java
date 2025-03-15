@@ -30,6 +30,7 @@ public class Elevator extends SubsystemBase {
     private static TestingElevatorPID pid = new TestingElevatorPID();
     private static TestingElevatorPIDPID pidForDaPid = new TestingElevatorPIDPID();
     private static int counter = 0;
+    private static boolean autoflag = false;
 
     public final static TalonFX elevatorMotor = new TalonFX(constants.Elevator.elevator, "rio");
     private final static TalonFX indexerMotor = new TalonFX(constants.Elevator.indexer, "rio");
@@ -161,16 +162,11 @@ public class Elevator extends SubsystemBase {
         public static void autoL3(){
             System.out.println("AUTO L3");
 
-            while (!RobotContainer.elevatorLimitSwitch.get()) {
-                selected = -2;
-            }
 
-            selected = l3Height;
+
+            selected = l4Height;
+            elevatorMotor.set(pid.getSpeed(selected - elevatorMotor.getPosition().getValueAsDouble()));
             System.out.println(selected);
-            if(elevatorMotor.getPosition().getValueAsDouble() <= l3Height + 5){
-                intook = 5;
-                selected = 0;
-            }
 
         }
 
@@ -191,6 +187,60 @@ public class Elevator extends SubsystemBase {
         }
 
         public static void autoIntake() {
-            intook = 1;
+            System.out.println("AUTO INTAKE");
+            if(autoflag == false) {
+
+                if (elevatorMotor.getPosition().getValueAsDouble() < 130) {
+                    counter++;
+                    indexerMotor.set(0.24);
+                } else {
+                    counter++;
+                    indexerMotor.set(0.2
+                    );
+                }
+                if (counter > 55) {
+                    indexerMotor.set(0);
+                    intook = 0;
+                    counter = 0;
+                    selected = 0;
+                    autoflag = true;
+                }
+            }
         }
+
+        public static void intakeDown(){
+            selected = -2;
+            intook = 0;
+            elevatorMotor.set(pid.getSpeed(selected - elevatorMotor.getPosition().getValueAsDouble()));
+            autoflag = false;
+        }
+
+        public static void autoPickUp() {
+            System.out.println("AUTO PICKUP");
+
+            if (intook == 1) {
+                indexerMotor.set(0.15);
+                if (!RobotContainer.intakeLimitSwitch.get()) {//initial intake, until the color sensor is triggered
+                    indexerMotor.set(0);
+                    intook = 3;
+                }
+            } else if (intook == 2) {//normal reverse
+                indexerMotor.set(-0.1);
+                intook = 0;
+            } else if (intook == 0) {//no operation case
+                indexerMotor.set(0);
+            } else if (intook == 3) {//go backwards slowly until we dont see the coral anymore
+                if (RobotContainer.intakeLimitSwitch.get()) {
+                    counter++;
+                    if (counter > 10) {
+                        intook = 4;
+                        indexerMotor.set(0);
+                        counter = 0;
+                    }
+                } else {
+                    indexerMotor.set(-0.05);
+                }
+            }
+        }
+
 }

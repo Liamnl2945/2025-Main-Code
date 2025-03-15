@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Elevator;
 
 
-public class autoIntakeCommand extends Command {
+public class autoPickUpCommand extends Command {
     private final Elevator elevator;
 
-    public autoIntakeCommand(Elevator elevator) {
+    public autoPickUpCommand(Elevator elevator) {
         this.elevator = elevator;
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
@@ -28,7 +28,7 @@ public class autoIntakeCommand extends Command {
      */
     @Override
     public void execute() {
-        Elevator.autoIntake();
+        elevator.autoPickUp();
     }
 
     /**
@@ -45,7 +45,11 @@ public class autoIntakeCommand extends Command {
      *
      * @return whether this command has finished.
      */
-
+    @Override
+    public boolean isFinished() {
+        // TODO: Make this return true when this Command no longer needs to run execute()
+        return false;
+    }
 
     /**
      * The action to take when the command ends. Called when either the command

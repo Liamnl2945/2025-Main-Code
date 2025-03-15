@@ -1,25 +1,29 @@
+
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Elevator;
 
 
-public class autoIntakeCommand extends Command {
-    private final Elevator elevator;
+public  class autoIntakeDownCommand extends Command {
+   private final Elevator elevator;
 
-    public autoIntakeCommand(Elevator elevator) {
+   public autoIntakeDownCommand(Elevator elevator)
+    {
         this.elevator = elevator;
+
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
-        addRequirements(this.elevator);
+       addRequirements(this.elevator);
     }
 
     /**
-     * The initial subroutine of a command.  Called once when the command is initially scheduled.
-     */
+    * The initial subroutine of a command.  Called once when the command is initially scheduled.
+    */
     @Override
-    public void initialize() {
-
+    public void initialize()
+    {
+        
     }
 
     /**
@@ -27,10 +31,11 @@ public class autoIntakeCommand extends Command {
      * (That is, it is called repeatedly until {@link #isFinished()}) returns true.)
      */
     @Override
-    public void execute() {
-        Elevator.autoIntake();
+    public void execute()
+    {
+       elevator.intakeDown();
     }
-
+    
     /**
      * <p>
      * Returns whether this command has finished. Once a command finishes -- indicated by
@@ -38,25 +43,32 @@ public class autoIntakeCommand extends Command {
      * </p><p>
      * Returning false will result in the command never ending automatically. It may still be
      * cancelled manually or interrupted by another command. Hard coding this command to always
-     * return true will result in the command executing once and finishing immediately. It is
+     * return true will result in the command executing once and finishing immediately. It is 
      * recommended to use * {@link edu.wpi.first.wpilibj2.command.InstantCommand InstantCommand}
      * for such an operation.
      * </p>
      *
      * @return whether this command has finished.
+     *
      */
-
+    @Override
+    public boolean isFinished()
+    {
+        // TODO: Make this return true when this Command no longer needs to run execute()
+        return false;
+    }
 
     /**
-     * The action to take when the command ends. Called when either the command
-     * finishes normally -- that is it is called when {@link #isFinished()} returns
-     * true -- or when  it is interrupted/canceled. This is where you may want to
+     * The action to take when the command ends. Called when either the command 
+     * finishes normally -- that is it is called when {@link #isFinished()} returns 
+     * true -- or when  it is interrupted/canceled. This is where you may want to 
      * wrap up loose ends, like shutting off a motor that was being used in the command.
-     *
+     * 
      * @param interrupted whether the command was interrupted/canceled
      */
     @Override
-    public void end(boolean interrupted) {
-
+    public void end(boolean interrupted)
+    {
+        
     }
 }
