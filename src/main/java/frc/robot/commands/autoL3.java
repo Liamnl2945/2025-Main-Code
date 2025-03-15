@@ -28,8 +28,6 @@ public class autoL3 extends Command {
 
     public autoL3(Elevator elevator) {
         this.elevator = elevator;
-
-
         addRequirements(elevator);
     }
 

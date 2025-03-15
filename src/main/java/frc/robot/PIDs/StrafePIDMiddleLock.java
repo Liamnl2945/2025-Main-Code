@@ -18,7 +18,7 @@ public class StrafePIDMiddleLock {
         pid.setTolerance(0); // allowable angle error
         pid.enableContinuousInput(0, 360); // it is faster to go 1 degree from 359 to 0 instead of 359 degrees
         //TODO TUNE THIS LOSER
-        pid.setSetpoint(-4.02); // 0 = apriltag angle/offset
+        pid.setSetpoint(-1.7); // 0 = apriltag angle/offset
         return pid;
     }
 
@@ -35,12 +35,12 @@ public class StrafePIDMiddleLock {
 
     public double getS() {
         if(Elevator.selected == Elevator.l4Height){
-            double calculatedValue = strafePID.calculate(limelightData.snakeXOffset-1);
+            double calculatedValue = strafePID.calculate(limelightData.algaeXOffset-1);
             System.out.println(calculatedValue);
             return calculatedValue;
         }
         else{
-            double calculatedValue = strafePID.calculate(limelightData.snakeXOffset);
+            double calculatedValue = strafePID.calculate(limelightData.algaeXOffset);
             System.out.println(calculatedValue);
             return calculatedValue;
         }

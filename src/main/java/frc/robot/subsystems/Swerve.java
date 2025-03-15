@@ -254,6 +254,10 @@ public void resetModulesToAbsolute(){
         }
       }
 
+      public void autoalignleft(){
+
+      }
+
      
     
       public SwerveModulePosition[] getPositions() {

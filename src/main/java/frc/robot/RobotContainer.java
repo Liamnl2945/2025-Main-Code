@@ -8,10 +8,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.*;
@@ -41,7 +38,7 @@ public class RobotContainer {
 
     //AUTOS
     private final SendableChooser<Command> autoChooser;
-   
+
 
 
     //ShuffleboardTab limelightTab;
@@ -92,7 +89,7 @@ public class RobotContainer {
 
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
-    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kX.value);
+    public static final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kX.value);
     public final static JoystickButton slowMove = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     public static final Trigger swerveOverride = new Trigger(() -> driver.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.1);
     public static final Trigger swerveAlign = new Trigger(() -> driver.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1);
@@ -155,6 +152,7 @@ public class RobotContainer {
     //private RotationSource hijackableRotation = new JoystickLock(); // get rotation from driver input;
 
 
+
     public RobotContainer() {
         //CommandScheduler.getInstance().registerSubsystem(m_LedSubsystem);
         
@@ -170,6 +168,16 @@ public class RobotContainer {
                         () -> false
                 )
         );
+
+         Command autoSwerveLock = new AutoAlignSwerveCommand(s_Swerve,
+                 () -> -driver.getRawAxis(translationAxis),
+                 () -> -driver.getRawAxis(strafeAxis),
+                 () -> -driver.getRawAxis(rotationAxis),
+                 () -> robotCentric.getAsBoolean()
+         );
+         Command autoSwerveLockTime = autoSwerveLock.withTimeout(3);
+
+
 
 
 
@@ -201,6 +209,8 @@ public class RobotContainer {
         NamedCommands.registerCommand("intake_Down", autoIntakeDown);
         NamedCommands.registerCommand("Intake in", autoIntakeCommand);
         NamedCommands.registerCommand("Intake_PickUp", autoIntakePickUp);
+        NamedCommands.registerCommand("Auto_align", autoSwerveLock);
+        NamedCommands.registerCommand("Auto_alignTime", autoSwerveLockTime);
 
         //ie. new EventTrigger("run intake").whileTrue(Commands.print("running intake"));
 
