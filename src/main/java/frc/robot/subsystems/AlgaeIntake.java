@@ -15,7 +15,7 @@ import frc.robot.RobotContainer;
 
 public class AlgaeIntake extends SubsystemBase {
     private final static TalonFX algaeWrist = new TalonFX(constants.AlgaeIntake.intakeArm);
-    private static VictorSPX top = new VictorSPX(constants.AlgaeIntake.intakeTop);
+    private static TalonFX top = new TalonFX(constants.AlgaeIntake.intakeTop);
     private static VictorSPX bottom = new VictorSPX(constants.AlgaeIntake.intakeBot);
     private static String tsSoFweakingStateVariable = "Calibrating";
     private static TstingAlgaeWristPID pid = new TstingAlgaeWristPID();
@@ -28,7 +28,7 @@ public class AlgaeIntake extends SubsystemBase {
 
     public AlgaeIntake(){
         algaeWrist.setNeutralMode(NeutralModeValue.Brake);
-        top.setInverted(true);
+        //top.setInverted(true);
         bottom.setInverted(true);
         intakeTimer.start();
     }
@@ -44,6 +44,7 @@ public class AlgaeIntake extends SubsystemBase {
                     tsSoFweakingStateVariable = "Manual";
                     targetPos = 0;
                 }
+
             }
 
             if(tsSoFweakingStateVariable.equals("Manual")) {
@@ -63,16 +64,25 @@ public class AlgaeIntake extends SubsystemBase {
                     tsSoFweakingStateVariable = "Calibrating";
                 }
 
+                if (targetPos >=  maxAlgaeArmRotations  ) {
+                    algaeWrist.set(0);
+                    targetPos = maxAlgaeArmRotations;
+                }
+                if(targetPos < 0) {
+                    algaeWrist.set(0);
+                    targetPos = 0;
+                }
+
                 // Intake/Outtake control
                 if(RobotContainer.leftTriggerAxis.getAsBoolean()) {
-                   top.set(ControlMode.PercentOutput, -1);
-                   bottom.set(ControlMode.PercentOutput, 1);
+                   top.set(-0.1);
+                  // bottom.set(ControlMode.PercentOutput, 1);
                 } else if (RobotContainer.rightTriggerAxis.getAsBoolean()) {
-                    top.set(ControlMode.PercentOutput, 1);
-                   bottom.set(ControlMode.PercentOutput, -1);
+                    top.set(0.1);
+                   //bottom.set(ControlMode.PercentOutput, -1);
                 } else {
-                   top.set(ControlMode.PercentOutput, 0);
-                    bottom.set(ControlMode.PercentOutput, 0);
+                   top.set(0);
+                    //bottom.set(ControlMode.PercentOutput, 0);
                 }
             }
 

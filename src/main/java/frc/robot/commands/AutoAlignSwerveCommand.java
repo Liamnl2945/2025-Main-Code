@@ -63,7 +63,7 @@ public class AutoAlignSwerveCommand extends Command {
      */
     @Override
     public void execute() {
-        while ((limelightData.snakeXOffset-1) >= 0.2) {
+        while ((limelightData.snakeXOffset-1) >= 0.2 && !flag) {
             System.out.println("if this doesn't work im gonna do 9/11");
             if (limelightData.TagValid) {//if limelight sees tag and the aiming is pressed
 
@@ -77,6 +77,8 @@ public class AutoAlignSwerveCommand extends Command {
                     RobotContainer.robotCentric.getAsBoolean(),
                     true
             );
+            flag = true;
+
 
         }
         //TODO MAKE THIS SET SWERVE TO 0 MAKEITNOT MOVE
