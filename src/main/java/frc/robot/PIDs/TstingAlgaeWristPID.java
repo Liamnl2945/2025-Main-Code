@@ -6,7 +6,7 @@ public class TstingAlgaeWristPID {
         
     public static PIDController algaeWristPID = createPIDController();
     private static PIDController createPIDController() {
-        PIDController pid = new PIDController(0.1, 0.0002, 0.0003);
+        PIDController pid = new PIDController(0.04, 0.0015, 0.0025);
         pid.setTolerance(0.1); // allowable distance error
         pid.setSetpoint(0);
         return pid;
