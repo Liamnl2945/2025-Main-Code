@@ -78,7 +78,7 @@ public class AlgaeIntake extends SubsystemBase {
 
                 // Intake/Outtake control
                 if(RobotContainer.leftTriggerAxis.getAsBoolean()) {
-                   top.set(.5);
+                   top.set(1);
                   // bottom.set(ControlMode.PercentOutput, 1);
                 } else if (RobotContainer.rightTriggerAxis.getAsBoolean()) {
                     top.set(-0.5);

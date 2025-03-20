@@ -17,7 +17,7 @@ public class StrafePIDRightLock {
     LinkedList<Double> errorHistory = new LinkedList<>();
 
     private static PIDController createPIDController() {
-        PIDController pid = new PIDController(0.0175, 0.00, 0.0008);
+        PIDController pid = new PIDController(0.0175, 0.0001, 0.001);
         pid.setTolerance(0); // allowable angle error
         pid.enableContinuousInput(0, 360); // it is faster to go 1 degree from 359 to 0 instead of 359 degrees
         pid.setSetpoint(constants.Swerve.rightAlignOffset); // 0 = apriltag angle/offset
