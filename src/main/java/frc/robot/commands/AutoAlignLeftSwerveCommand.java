@@ -2,11 +2,8 @@ package frc.robot.commands;
 
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.PIDs.*;
 import frc.robot.constants;
@@ -17,10 +14,8 @@ import frc.robot.RobotContainer;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
-import static frc.robot.subsystems.Elevator.height;
 
-
-public class AutoAlignSwerveCommand extends Command {
+public class AutoAlignLeftSwerveCommand extends Command {
     private static StrafePIDLeftLock strafePIDLeftLock = new StrafePIDLeftLock();
 
     private Pigeon2 gyro;
@@ -28,11 +23,12 @@ public class AutoAlignSwerveCommand extends Command {
     private final Swerve s_Swerve;
     private double strafeVal;
 
+    // also listen to Red by King Crimson it's a basic prog rock favorite but Starless literally changed my life and how I think of music, for me One More Red Nightmare is alsoa highlight
 
     private Rotation2d rotationHold;
 
-    public AutoAlignSwerveCommand(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup,
-                                  BooleanSupplier robotCentricSup) {
+    public AutoAlignLeftSwerveCommand(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup,
+                                      BooleanSupplier robotCentricSup) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
 
