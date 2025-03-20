@@ -36,9 +36,9 @@ public class constants {
 
     public static final class Swerve {
 
-        public static final double leftAlignOffset = -4.02;
-        public static final double rightAlignOffset = 16.68;
-        public static final double middleAlignOffset = -1.7;
+        public static final double leftAlignOffset = -0.4;
+        public static final double rightAlignOffset = 27.69;
+        public static final double middleAlignOffset = -6.84;
 
         public static final int pigeonID = 20;
 
