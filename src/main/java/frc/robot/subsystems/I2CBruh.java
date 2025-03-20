@@ -39,7 +39,7 @@ public class I2CBruh extends SubsystemBase {
 
             int colorData = getRawColors();
             coralDetected = (colorData > 400);
-            SmartDashboard.putBoolean("Coral Detected", coralDetected);
+            //SmartDashboard.putBoolean("Coral Detected", coralDetected);
 
             // Debug print the color data
             //System.out.println(colorData);

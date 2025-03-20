@@ -3,6 +3,7 @@ package frc.robot.PIDs;
 import edu.wpi.first.math.controller.PIDController;
 import frc.robot.limelightData;
 import frc.robot.subsystems.Elevator;
+import frc.robot.constants;
 
 import java.util.LinkedList;
 
@@ -18,7 +19,7 @@ public class StrafePIDMiddleLock {
         pid.setTolerance(0); // allowable angle error
         pid.enableContinuousInput(0, 360); // it is faster to go 1 degree from 359 to 0 instead of 359 degrees
         //TODO TUNE THIS LOSER
-        pid.setSetpoint(-1.7); // 0 = apriltag angle/offset
+        pid.setSetpoint(constants.Swerve.middleAlignOffset); // 0 = apriltag angle/offset
         return pid;
     }
 

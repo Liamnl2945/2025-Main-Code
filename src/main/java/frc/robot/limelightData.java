@@ -2,7 +2,9 @@ package frc.robot;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.TeleopSwerve;
+import frc.robot.RobotContainer;
 
 import java.util.Arrays;
 
@@ -29,6 +31,7 @@ public class limelightData {
         public static boolean noteValid;
         public static double snakeTagArea;
         public static double algaeTagArea;
+        private static double swerveAlignOffsetTolerance = 0.15;
 
         public static boolean contains(int[] arr, double index){//coding bat ahh function
             for(int i = 0; i < arr.length; i++){
@@ -40,6 +43,26 @@ public class limelightData {
         }
 
     public void calculate() {
+            if(RobotContainer.swerveAlign.getAsBoolean()){
+                switch (TeleopSwerve.alignValue){
+                    case -1:
+                            SmartDashboard.putBoolean("Robot Aligned", Math.abs(constants.Swerve.leftAlignOffset - snakeXOffset) < swerveAlignOffsetTolerance);
+                        break;
+                    case 0:
+                        SmartDashboard.putBoolean("Robot Aligned", Math.abs(constants.Swerve.middleAlignOffset - algaeXOffset) < swerveAlignOffsetTolerance);
+                        break;
+                    case 1:
+                        SmartDashboard.putBoolean("Robot Aligned", Math.abs(constants.Swerve.rightAlignOffset - algaeXOffset) < swerveAlignOffsetTolerance);
+                        break;
+                    default:
+                        SmartDashboard.putBoolean("Robot Aligned", false);
+                        break;
+
+
+
+                }
+
+            }
 
         snakeTagID = SnakeTable.getEntry("tid").getDouble(0.0);
         algaeTagID = algaeTable.getEntry("tid").getDouble(0.0);
@@ -64,10 +87,12 @@ public class limelightData {
 
        // System.out.println(noteValid + " " + snakeXOffset);
     if ((TeleopSwerve.alignValue == 1) && (limelightData.TagAlgaeValid)) {
-        System.out.println("Aligned Right" + " \n" + " Note Valid: " + TagValid + " ID: " + algaeTagID + " Offset: " + algaeXOffset);
+        System.out.println("Aligned Right" + " \n" + " Note Valid: " + TagValid + " ID: " + algaeTagID + " OFFSET: " + algaeXOffset);
     } else if ((TeleopSwerve.alignValue == -1) && (limelightData.TagSnakeValid)){
-        System.out.println("Aligned Left" + " \n" +  " Note Valid: " + TagValid + " ID: " + snakeTagID + " Offset: " + snakeXOffset);
-    } else{
+        System.out.println("Aligned Left" + " \n" +  " Note Valid: " + TagValid + " ID: " + snakeTagID + " OFFSET: " + snakeXOffset);
+    } else if((TeleopSwerve.alignValue == 0) && (limelightData.TagAlgaeValid)){
+        System.out.println("Aligned Middle" + " \n" +  " Note Valid: " + TagValid + " ID: " + algaeTagID + " OFFSET: " + algaeXOffset);
+    }else{
     System.out.println(TeleopSwerve.alignValue);
 }
     }
