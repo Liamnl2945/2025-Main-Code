@@ -79,7 +79,7 @@ public class Robot extends TimedRobot {
     }
 
     Shuffleboard.getTab("Dashboard")
-            .add("Coral Detected", false)
+            .add("Robot Aligned", false)
             .withWidget(BuiltInWidgets.kBooleanBox)
             .withProperties(Map.of("colorWhenTrue", "green", "colorWhenFalse", "red"));
 
