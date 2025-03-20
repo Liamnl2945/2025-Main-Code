@@ -169,7 +169,7 @@ public class RobotContainer {
                 )
         );
 
-         Command autoSwerveLock = new AutoAlignSwerveCommand(s_Swerve,
+         Command autoSwerveLock = new AutoAlignLeftSwerveCommand(s_Swerve,
                  () -> -driver.getRawAxis(translationAxis),
                  () -> -driver.getRawAxis(strafeAxis),
                  () -> -driver.getRawAxis(rotationAxis),
