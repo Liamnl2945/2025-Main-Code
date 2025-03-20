@@ -21,27 +21,26 @@ import static frc.robot.subsystems.Elevator.height;
 
 
 public class AutoAlignSwerveCommand extends Command {
-   private static StrafePIDLeftLock strafePIDLeftLock = new StrafePIDLeftLock();
+    private static StrafePIDLeftLock strafePIDLeftLock = new StrafePIDLeftLock();
 
-   private Pigeon2 gyro;
-   private final Swerve s_Swerve;
-   private double strafeVal;
+    private Pigeon2 gyro;
+    private int aligns = 0;
+    private final Swerve s_Swerve;
+    private double strafeVal;
 
 
-   private boolean flag = false;
-
-   private Rotation2d rotationHold;
+    private Rotation2d rotationHold;
 
     public AutoAlignSwerveCommand(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup,
                                   BooleanSupplier robotCentricSup) {
-      this.s_Swerve = s_Swerve;
-      addRequirements(s_Swerve);
+        this.s_Swerve = s_Swerve;
+        addRequirements(s_Swerve);
 
-         // Initialize PID controllers
+        // Initialize PID controllers
 
-         gyro = new Pigeon2(constants.Swerve.pigeonID);
-         gyro.getConfigurator().apply(new Pigeon2Configuration());
-         gyro.setYaw(0);
+        gyro = new Pigeon2(constants.Swerve.pigeonID);
+        gyro.getConfigurator().apply(new Pigeon2Configuration());
+        gyro.setYaw(0);
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
 
@@ -63,28 +62,43 @@ public class AutoAlignSwerveCommand extends Command {
      */
     @Override
     public void execute() {
-        while ((limelightData.snakeXOffset-1) >= 0.2 && !flag) {
+        while ((limelightData.snakeXOffset-1) >= 0.2) {
             System.out.println("if this doesn't work im gonna do 9/11");
-            if (limelightData.TagValid) {//if limelight sees tag and the aiming is pressed
+            aligns++;
+            System.out.println("aligned" + aligns + "times");
+            if (limelightData.TagValid) {//if limelight sees tag
 
                 if (limelightData.TagSnakeValid) {
                     strafeVal = strafePIDLeftLock.getS();
+                    s_Swerve.drive(
+                            new Translation2d(0.05, strafeVal).times(constants.Swerve.maxSpeed),
+                            0 * constants.Swerve.maxAngularVelocity,
+                            RobotContainer.robotCentric.getAsBoolean(),
+                            true
+                    );
                 }
             }
-            s_Swerve.drive(
-            new Translation2d(0.05, strafeVal).times(constants.Swerve.maxSpeed),
-                    0 * constants.Swerve.maxAngularVelocity,
-                    RobotContainer.robotCentric.getAsBoolean(),
-                    true
-            );
-            flag = true;
+
 
 
         }
-        //TODO MAKE THIS SET SWERVE TO 0 MAKEITNOT MOVE
+
+        //prints "done" and drives forward until deadline canceled - Walden
+
+        System.out.println("Done");
+
+        s_Swerve.drive(
+                new Translation2d(0.1, 0).times(constants.Swerve.maxSpeed),
+                0 * constants.Swerve.maxAngularVelocity,
+                RobotContainer.robotCentric.getAsBoolean(),
+                true
+        );
 
 
 
     }
 
 }
+
+// This fine command has been provided by the honorable Richard M. Daley and Walden O. Oberloh
+// (Chicago brothers get it)
