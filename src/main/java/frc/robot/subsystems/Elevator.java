@@ -22,10 +22,10 @@ public class Elevator extends SubsystemBase {
     public static double selected = -1;
     public static double height = 0;
     public static int intook = 0;
-    public static double l1Height = -34;
-    public static double l2Height = -65.5;
-    public static double l3Height = -100.5;
-    public static double l4Height = -146;
+    public static double l1Height = -35;
+    public static double l2Height = -66.5;
+    public static double l3Height = -101.5;
+    public static double l4Height = -147;
     private static I2CBruh colorSensor = new I2CBruh();
     private static TestingElevatorPID pid = new TestingElevatorPID();
     private static TestingElevatorPIDPID pidForDaPid = new TestingElevatorPIDPID();
