@@ -100,7 +100,7 @@ public class limelightData {
     } else if((TeleopSwerve.alignValue == 0) && (limelightData.TagAlgaeValid)){
         System.out.println("Aligned Middle" + " \n" +  " Note Valid: " + TagValid + " ID: " + algaeTagID + " OFFSET: " + algaeXOffset);
     }else{
-    System.out.println(TeleopSwerve.alignValue);
+    //System.out.println(TeleopSwerve.alignValue);
 }
     }
 }
