@@ -35,7 +35,7 @@ public class TeleopSwerve extends Command {
 
     public static int alignValue = 1;
 
-    private final double moveSpeedLimiter = 0.6*(1-(height*0.9));//limit swerve speed based on elevator height
+    private final double moveSpeedLimiter = 0.75*(1-(height*0.9));//limit swerve speed based on elevator height
     private final double rotationSpeedLimiter = 0.5*(0.2*(1-(height * 0.9)));
 
     private AprilTagPointLock rotationPID;
