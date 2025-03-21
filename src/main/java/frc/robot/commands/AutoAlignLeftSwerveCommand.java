@@ -47,19 +47,10 @@ public class AutoAlignLeftSwerveCommand extends Command {
      */
     @Override
     public void initialize() {
+        rotationHold = s_Swerve.getHeading();
         s_Swerve.setHeading(new Rotation2d(0));
-
-
-    }
-
-    /**
-     * The main body of a command.  Called repeatedly while the command is scheduled.
-     * (That is, it is called repeatedly until {@link #isFinished()}) returns true.)
-     */
-    @Override
-    public void execute() {
-        while ((limelightData.snakeXOffset-1) >= 0.2) {
-            System.out.println("if this doesn't work im gonna do 9/11");
+        while ((limelightData.snakeXOffset - 1) >= 0.2) {
+            System.out.println("if this doesn't work im gonna do 9/11"); // chat gpt didn't fuck with this line but I like it 😅
             aligns++;
             System.out.println("aligned" + aligns + "times");
             if (limelightData.TagValid) {//if limelight sees tag
@@ -76,9 +67,7 @@ public class AutoAlignLeftSwerveCommand extends Command {
             }
 
 
-
         }
-
         //prints "done" and drives forward until deadline canceled - Walden
 
         System.out.println("Done");
@@ -89,9 +78,25 @@ public class AutoAlignLeftSwerveCommand extends Command {
                 RobotContainer.robotCentric.getAsBoolean(),
                 true
         );
+        s_Swerve.setHeading(rotationHold);
+
+    }
+
+    /**
+     * The main body of a command.  Called repeatedly while the command is scheduled.
+     * (That is, it is called repeatedly until {@link #isFinished()}) returns true.)
+     */
+    @Override
+    public void execute() {
 
 
 
+
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        System.out.println("AutoAlignLeftSwerveCommand ended. Interrupted? " + interrupted);
     }
 
 }

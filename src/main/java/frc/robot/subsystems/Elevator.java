@@ -73,8 +73,11 @@ public class Elevator extends SubsystemBase {
             }
             
             if(selected != -1 && selected != -2){
-                elevatorMotor.set(pid.getSpeed(selected - elevatorMotor.getPosition().getValueAsDouble()));//pass in the error as a function of the distance between our current rotations and the setpoint rotation
-                //System.out.println("Elevator position:" + elevatorMotor.getPosition().getValueAsDouble());
+                if(pid.getSpeed(selected - elevatorMotor.getPosition().getValueAsDouble()) > 0){
+                    elevatorMotor.set(pid.getSpeed(selected - elevatorMotor.getPosition().getValueAsDouble()) * 0.6);
+                }else{
+                    elevatorMotor.set(pid.getSpeed(selected - elevatorMotor.getPosition().getValueAsDouble()));
+                }                System.out.println("Elevator position:" + elevatorMotor.getPosition().getValueAsDouble());
                 if(RobotContainer.elevatorLimitSwitch.get()){
                     selected = -1;
                 }

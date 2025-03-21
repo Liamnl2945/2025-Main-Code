@@ -92,6 +92,7 @@ public class RobotContainer {
     public static final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kX.value);
     public final static JoystickButton slowMove = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     public static final Trigger swerveOverride = new Trigger(() -> driver.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.1);
+    public final static JoystickButton fastMove = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
     public static final Trigger swerveAlign = new Trigger(() -> driver.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1);
 
 
@@ -175,7 +176,7 @@ public class RobotContainer {
                  () -> -driver.getRawAxis(rotationAxis),
                  () -> robotCentric.getAsBoolean()
          );
-         Command autoSwerveLockTime = autoSwerveLock.withTimeout(3);
+         Command autoSwerveLockTime = autoSwerveLock.withTimeout(2.5);
 
 
 
