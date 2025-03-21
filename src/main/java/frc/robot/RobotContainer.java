@@ -175,7 +175,7 @@ public class RobotContainer {
                  () -> -driver.getRawAxis(rotationAxis),
                  () -> robotCentric.getAsBoolean()
          );
-         Command autoSwerveLockTime = autoSwerveLock.withTimeout(3);
+         Command autoSwerveLockTime = autoSwerveLock.withTimeout(2.5);
 
 
 

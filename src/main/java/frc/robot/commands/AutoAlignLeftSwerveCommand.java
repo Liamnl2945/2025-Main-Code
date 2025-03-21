@@ -58,8 +58,8 @@ public class AutoAlignLeftSwerveCommand extends Command {
      */
     @Override
     public void execute() {
-        while ((limelightData.snakeXOffset-1) >= 0.2) {
-            System.out.println("if this doesn't work im gonna do 9/11");
+        if ((limelightData.snakeXOffset - 1) >= 0.2) {
+            System.out.println("if this doesn't work im gonna do 9/11"); // chat gpt didn't fuck with this line but I like it 😅
             aligns++;
             System.out.println("aligned" + aligns + "times");
             if (limelightData.TagValid) {//if limelight sees tag
@@ -76,22 +76,21 @@ public class AutoAlignLeftSwerveCommand extends Command {
             }
 
 
+        } else {
+
+            //prints "done" and drives forward until deadline canceled - Walden
+
+            System.out.println("Done");
+
+            s_Swerve.drive(
+                    new Translation2d(0.1, 0).times(constants.Swerve.maxSpeed),
+                    0 * constants.Swerve.maxAngularVelocity,
+                    RobotContainer.robotCentric.getAsBoolean(),
+                    true
+            );
+
 
         }
-
-        //prints "done" and drives forward until deadline canceled - Walden
-
-        System.out.println("Done");
-
-        s_Swerve.drive(
-                new Translation2d(0.1, 0).times(constants.Swerve.maxSpeed),
-                0 * constants.Swerve.maxAngularVelocity,
-                RobotContainer.robotCentric.getAsBoolean(),
-                true
-        );
-
-
-
     }
 
 }
