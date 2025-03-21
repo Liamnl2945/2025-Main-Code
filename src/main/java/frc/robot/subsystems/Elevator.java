@@ -22,10 +22,10 @@ public class Elevator extends SubsystemBase {
     public static double selected = -1;
     public static double height = 0;
     public static int intook = 0;
-    public static double l1Height = -34;
-    public static double l2Height = -65.5;
-    public static double l3Height = -100.5;
-    public static double l4Height = -146;
+    public static double l1Height = -35;
+    public static double l2Height = -66.5;
+    public static double l3Height = -101.5;
+    public static double l4Height = -147;
     private static I2CBruh colorSensor = new I2CBruh();
     private static TestingElevatorPID pid = new TestingElevatorPID();
     private static TestingElevatorPIDPID pidForDaPid = new TestingElevatorPIDPID();
@@ -39,7 +39,7 @@ public class Elevator extends SubsystemBase {
             indexerMotor.setNeutralMode(NeutralModeValue.Brake);
             elevatorMotor.setNeutralMode(NeutralModeValue.Brake);
             elevatorMotor.setPosition(0);
-           
+
         }
 //among us
 
@@ -73,11 +73,11 @@ public class Elevator extends SubsystemBase {
             }
             
             if(selected != -1 && selected != -2){
-                if(pid.getSpeed(selected - elevatorMotor.getPosition().getValueAsDouble()) > 0){
-                    elevatorMotor.set(pid.getSpeed(selected - elevatorMotor.getPosition().getValueAsDouble()) * 0.6);
-                }else{
+                //if(pid.getSpeed(selected - elevatorMotor.getPosition().getValueAsDouble()) > 0){
+                //    elevatorMotor.set(pid.getSpeed(selected - elevatorMotor.getPosition().getValueAsDouble()) * 0.6);
+                //}else{
                     elevatorMotor.set(pid.getSpeed(selected - elevatorMotor.getPosition().getValueAsDouble()));
-                }                System.out.println("Elevator position:" + elevatorMotor.getPosition().getValueAsDouble());
+               // }                System.out.println("Elevator position:" + elevatorMotor.getPosition().getValueAsDouble());
                 if(RobotContainer.elevatorLimitSwitch.get()){
                     selected = -1;
                 }

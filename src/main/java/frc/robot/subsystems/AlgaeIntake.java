@@ -30,6 +30,7 @@ public class AlgaeIntake extends SubsystemBase {
         algaeWrist.setNeutralMode(NeutralModeValue.Brake);
         //top.setInverted(true);
         bottom.setInverted(true);
+        top.setNeutralMode(NeutralModeValue.Brake);
         intakeTimer.start();
     }
 

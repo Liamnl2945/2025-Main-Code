@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 16.578995901639345,
-        "y": 0.938165983606558
+        "x": 12.275409836065574,
+        "y": 5.097899590163934
       },
       "prevControl": null,
       "nextControl": {
-        "x": 13.083678475343445,
-        "y": 3.2184219424616405
+        "x": 12.77889344262295,
+        "y": 6.812141393442622
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 13.42622950819672,
-        "y": 2.9521004098360653
+        "x": 16.075512295081968,
+        "y": 7.23171106557377
       },
       "prevControl": {
-        "x": 14.305332675653165,
-        "y": 2.382888748922292
+        "x": 13.821823770491804,
+        "y": 6.248719262295081
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,8 +32,8 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.3,
-      "maxWaypointRelativePos": 0.5,
+      "minWaypointRelativePos": 0.0,
+      "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 1.5,
         "maxAcceleration": 3.0,
@@ -56,13 +56,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 121.42956561483841
+    "rotation": -126.11934084947963
   },
   "reversed": false,
   "folder": "Red Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 128.06071086778934
+    "rotation": -61.090816348852336
   },
   "useDefaultConstraints": true
 }

@@ -78,8 +78,15 @@ public class limelightData {
         TagAlgaeValid = contains(validTags, algaeTagID);
         //Pulls from tdclass network table variable, setting it to true if it matches the tag. This name is pulled from the file uploaded to teh limelight, not locally. To change the tag, chang ethe uploaded .txt file
 
+
         snakeXOffset = SnakeTable.getEntry("tx").getDouble(0.0);//Gets basic offset of the detected tag from network tables. This is the main source for calculating error values for pointlock PID's for the april tag aim lock
-        algaeXOffset = algaeTable.getEntry("tx").getDouble(0.0);
+       if(-algaeTable.getEntry("tx").getDouble(0.0) < -20){
+           TagAlgaeValid = false;
+       }
+       else{
+           algaeXOffset = -algaeTable.getEntry("tx").getDouble(0.0);
+       }
+        algaeXOffset = -algaeTable.getEntry("tx").getDouble(0.0);
 
         snakeTagArea = SnakeTable.getEntry("ta").getDouble(0.0);//Gets basic offset of the detected tag from network tables. This is the main source for calculating error values for pointlock PID's for the april tag aim lock
         algaeTagArea = algaeTable.getEntry("ta").getDouble(0.0);

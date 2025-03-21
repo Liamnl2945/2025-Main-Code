@@ -7,7 +7,26 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Red Top side"
+            "pathName": "Blue top to coral"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Auto_align"
+                }
+              }
+            ]
           }
         },
         {
@@ -57,7 +76,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Red top coral to human"
+            "pathName": "Blue Top Coral to HP"
           }
         },
         {
@@ -65,15 +84,46 @@
           "data": {
             "commands": [
               {
+                "type": "wait",
+                "data": {
+                  "waitTime": 2.0
+                }
+              },
+              {
                 "type": "named",
                 "data": {
                   "name": "Intake_PickUp"
                 }
-              },
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Bot human player - reef"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "auto_L3"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 2.0
+                  "waitTime": 1.0
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intake_Out"
                 }
               }
             ]
@@ -83,6 +133,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Red Autos ",
+  "folder": "Blue Autos",
   "choreoAuto": false
 }
