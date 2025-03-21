@@ -36,7 +36,7 @@ public class TeleopSwerve extends Command {
     public static int alignValue = 1;
 
     private double moveSpeedLimiter = 0.75*(1-(height*0.9));//limit swerve speed based on elevator height
-    private final double rotationSpeedLimiter = 0.5*(0.2*(1-(height * 0.9)));
+    private double rotationSpeedLimiter = 0.5*(0.2*(1-(height * 0.9)));
 
     private AprilTagPointLock rotationPID;
     private TranslationPID translationPID;
@@ -115,8 +115,10 @@ public class TeleopSwerve extends Command {
 
         if(RobotContainer.fastMove.getAsBoolean()){
             moveSpeedLimiter = 1;
+            rotationSpeedLimiter = 1;
         } else {
-            moveSpeedLimiter = 0.75*(1-(height*0.9));
+            moveSpeedLimiter = 0.4;
+            rotationSpeedLimiter = 0.25;
         }
 
         if(limelightData.TagValid && RobotContainer.swerveAlign.getAsBoolean() && !RobotContainer.swerveOverride.getAsBoolean()){//if limelight sees tag and the aiming is pressed

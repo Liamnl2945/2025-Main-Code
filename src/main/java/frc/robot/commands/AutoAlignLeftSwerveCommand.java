@@ -47,6 +47,7 @@ public class AutoAlignLeftSwerveCommand extends Command {
      */
     @Override
     public void initialize() {
+        rotationHold = s_Swerve.getHeading();
         s_Swerve.setHeading(new Rotation2d(0));
         while ((limelightData.snakeXOffset - 1) >= 0.2) {
             System.out.println("if this doesn't work im gonna do 9/11"); // chat gpt didn't fuck with this line but I like it 😅
@@ -77,7 +78,7 @@ public class AutoAlignLeftSwerveCommand extends Command {
                 RobotContainer.robotCentric.getAsBoolean(),
                 true
         );
-
+        s_Swerve.setHeading(rotationHold);
 
     }
 
@@ -92,6 +93,7 @@ public class AutoAlignLeftSwerveCommand extends Command {
 
 
     }
+
     @Override
     public void end(boolean interrupted) {
         System.out.println("AutoAlignLeftSwerveCommand ended. Interrupted? " + interrupted);
