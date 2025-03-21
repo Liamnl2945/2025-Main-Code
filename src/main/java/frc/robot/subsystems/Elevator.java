@@ -39,7 +39,7 @@ public class Elevator extends SubsystemBase {
             indexerMotor.setNeutralMode(NeutralModeValue.Brake);
             elevatorMotor.setNeutralMode(NeutralModeValue.Brake);
             elevatorMotor.setPosition(0);
-           
+
         }
 //among us
 
@@ -73,11 +73,11 @@ public class Elevator extends SubsystemBase {
             }
             
             if(selected != -1 && selected != -2){
-                if(pid.getSpeed(selected - elevatorMotor.getPosition().getValueAsDouble()) > 0){
-                    elevatorMotor.set(pid.getSpeed(selected - elevatorMotor.getPosition().getValueAsDouble()) * 0.6);
-                }else{
+                //if(pid.getSpeed(selected - elevatorMotor.getPosition().getValueAsDouble()) > 0){
+                //    elevatorMotor.set(pid.getSpeed(selected - elevatorMotor.getPosition().getValueAsDouble()) * 0.6);
+                //}else{
                     elevatorMotor.set(pid.getSpeed(selected - elevatorMotor.getPosition().getValueAsDouble()));
-                }                System.out.println("Elevator position:" + elevatorMotor.getPosition().getValueAsDouble());
+               // }                System.out.println("Elevator position:" + elevatorMotor.getPosition().getValueAsDouble());
                 if(RobotContainer.elevatorLimitSwitch.get()){
                     selected = -1;
                 }
